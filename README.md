@@ -34,7 +34,7 @@ Look at the App.vue for more detail
     </section>
 
     <section class="story">
-      <label>With event</label>
+      <label>With events</label>
       <SimpleOtpInput
         type="password"
         :length="4"

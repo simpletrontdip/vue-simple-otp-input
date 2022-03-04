@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h4>Vue SimpleOtpInput</h4>
     <section class="story">
       <label>Default otp input</label>
       <SimpleOtpInput />
@@ -14,7 +15,7 @@
     </section>
 
     <section class="story">
-      <label>With event</label>
+      <label>With events</label>
       <SimpleOtpInput
         type="password"
         :length="4"
