@@ -1,19 +1,57 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="story">
+      <label>Default otp input</label>
+      <SimpleOtpInput />
+    </section>
+    <section class="story">
+      <label>Password type input</label>
+      <SimpleOtpInput type="password" :length="4" />
+    </section>
+    <section class="story">
+      <label>With inital value</label>
+      <SimpleOtpInput value="123456" />
+    </section>
+
+    <section class="story">
+      <label>With event</label>
+      <SimpleOtpInput
+        type="password"
+        :length="4"
+        @change="handleChange"
+        @complete="handleComplete"
+      />
+      <div><strong>Draft</strong> {{ otp }}</div>
+      <div><strong>Submitted</strong> {{ submittedOtp }}</div>
+    </section>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SimpleOtpInput from "./components/SimpleOtpInput.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    SimpleOtpInput,
+  },
+  data() {
+    return {
+      otp: "",
+      submittedOtp: "",
+    };
+  },
+  methods: {
+    handleChange(v) {
+      this.otp = v;
+      console.log("Changed", v);
+    },
+    handleComplete(v) {
+      this.submittedOtp = v;
+      console.log("Submitted", v);
+    },
+  },
+};
 </script>
 
 <style>
@@ -24,5 +62,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.story {
+  padding: 8px;
+  margin-top: 24px;
 }
 </style>
