@@ -73,7 +73,7 @@ export default {
         this.populateNext(this.$refs.inputs[idx + 1], data, idx + 1);
       }
     },
-    childFocus(e, idx) {
+    childFocus(_e, idx) {
       if (idx === 0) {
         return;
       }
@@ -84,7 +84,6 @@ export default {
       }
 
       // If value of a previous input is empty, focus it.
-      // To remove if you don't wanna force user respecting the fields order.
       if (this.$refs.inputs[idx - 1].value === "") {
         this.$refs.inputs[idx - 1].focus();
       }
