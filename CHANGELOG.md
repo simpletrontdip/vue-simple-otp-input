@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.9...v0.1.10) (2022-03-05)
+
+
+### Features
+
+* **readme:** add video for autofill demonstration ([a08eb3e](https://github.com/simpletrontdip/vue-simple-otp-input/commit/a08eb3ef1ff8fe1bb9833a3e1b300cf401048c92))
+
 ### [0.1.9](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.8...v0.1.9) (2022-03-05)
 
 
