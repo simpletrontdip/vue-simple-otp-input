@@ -7,7 +7,6 @@
       :value="otp[idx]"
       :autocomplete="idx === 0 ? 'one-time-code' : 'off'"
       :type="type"
-      maxlength="1"
       :class="['otp-single-input', inputClasses]"
       @focus="childFocus($event, idx)"
       @keyup="childKeyUp($event, idx)"
@@ -52,25 +51,25 @@ export default {
     };
   },
   methods: {
-    otpValue() {
-      return this.otp.map((e) => e || " ").join("");
+    getOtpValue() {
+      return this.otp.map((item) => item || " ").join("");
     },
-    splitValue(e, startIdx = 0) {
-      const data = e.data || e.target.value;
+    setOtpValue(data, startIdx = 0) {
       if (!data || data.length === 1) {
         return;
       }
 
-      this.populateNext(e.target, data, startIdx);
+      this.populateNext(data, startIdx);
     },
-    populateNext(el, data, idx) {
+    populateNext(data, idx) {
       // set the value to model and element as well
+      const el = this.$refs.inputs[idx];
       this.otp[idx] = el.value = data[0];
       data = data.substring(1);
 
       if (idx < this.length - 1 && data.length) {
         // Do the same with the next element and next data
-        this.populateNext(this.$refs.inputs[idx + 1], data, idx + 1);
+        this.populateNext(data, idx + 1);
       }
     },
     childFocus(_e, idx) {
@@ -88,38 +87,41 @@ export default {
         this.$refs.inputs[idx - 1].focus();
       }
     },
-    childKeyUp(e, idx) {
+    childKeyUp(event, idx) {
       // Ignore system modifiers keys
       if (
-        e.keyCode === SHIFT ||
-        e.keyCode === TAB ||
-        e.keyCode === CMD ||
-        e.keyCode === ALT ||
-        e.keyCode === CTRL
+        event.keyCode === SHIFT ||
+        event.keyCode === TAB ||
+        event.keyCode === CMD ||
+        event.keyCode === ALT ||
+        event.keyCode === CTRL
       ) {
         return;
       }
 
-      if (e.keyCode === ENTER) {
+      if (event.keyCode === ENTER) {
         // complete
-        this.$emit("complete", this.otpValue());
+        this.$emit("complete", this.getOtpValue());
       }
 
       // On Backspace or left arrow, go to the previous field.
-      if ((e.keyCode === BACKSPACE || e.keyCode === LEFT_ARROW) && idx > 0) {
+      if (
+        (event.keyCode === BACKSPACE || event.keyCode === LEFT_ARROW) &&
+        idx > 0
+      ) {
         this.$refs.inputs[idx - 1].select();
-      } else if (e.keyCode !== BACKSPACE && idx < this.length - 1) {
+      } else if (event.keyCode !== BACKSPACE && idx < this.length - 1) {
         this.$refs.inputs[idx + 1].select();
       }
 
       // If the target is populated to quickly, value length can be > 1
-      if (e.target.value.length > 1) {
-        this.splitValue(e, idx);
+      if (event.target.value.length > 1) {
+        this.setOtpValue(event.target.value, idx);
       } else {
-        this.otp[idx] = e.target.value;
+        this.otp[idx] = event.target.value;
       }
 
-      this.$emit("change", this.otpValue());
+      this.$emit("change", this.getOtpValue());
     },
   },
 };
