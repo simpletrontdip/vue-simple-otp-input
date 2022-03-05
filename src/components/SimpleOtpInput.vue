@@ -7,6 +7,7 @@
       :value="otp[idx]"
       :autocomplete="idx === 0 ? 'one-time-code' : 'off'"
       :type="type"
+      inputmode="numeric"
       :class="['otp-single-input', inputClasses]"
       @focus="childFocus($event, idx)"
       @keyup="childKeyUp($event, idx)"
