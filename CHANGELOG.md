@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.8...v0.1.9) (2022-03-05)
+
+
+### Features
+
+* **build:** exclude core js from babel buid, reduce bundle size ([6327dac](https://github.com/simpletrontdip/vue-simple-otp-input/commit/6327dac069466e0d0d2c3a2f8a521d3de4401385))
+
 ### [0.1.8](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.7...v0.1.8) (2022-03-05)
 
 ### [0.1.7](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.6...v0.1.7) (2022-03-05)
