@@ -14,7 +14,7 @@ This is a simple to do, but also hard to make it work correctly and handle all t
 Based on my expericences with the existing libs, I created this to handle all my needs. Hope it helps you as well.
 
 Video for autofill in mobile page (from a friend)
-https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4
+[![Watch the video](https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4)
 
 # Install
 
@@ -29,11 +29,6 @@ import { SimpleOtpInput } from "vue-simple-otp-input";
 # Demo
 
 Look at the App.vue for more detail, or try it [here](https://simpletrontdip.github.io/vue-simple-otp-input/demo/)
-
-
-
-
-
 
 ```jsx
     <section class="story">
