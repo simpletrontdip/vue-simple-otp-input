@@ -9,6 +9,15 @@
     "release": "standard-version -a",
     "lint": "vue-cli-service lint"
   },
+  "main": "./dist/vue-simple-otp-input.common.js",
+  "unpkg": "./dist/vue-simple-otp-input.umd.min.js",
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
