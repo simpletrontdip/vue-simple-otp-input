@@ -15,6 +15,14 @@ Based on my expericences with the existing libs, I created this to handle all my
 
 # Install
 
+```
+yarn add vue-simple-otp-input
+```
+
+```js
+import { SimpleOtpInput } from "vue-simple-otp-input";
+```
+
 # Demo
 
 Look at the App.vue for more detail, or try it [here](https://simpletrontdip.github.io/vue-simple-otp-input/demo/)
