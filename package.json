@@ -18,6 +18,15 @@
     "*.json",
     "*.js"
   ],
+  "keywords": [
+    "vue2otpinput",
+    "vue2",
+    "vue",
+    "otp",
+    "input",
+    "otpinput",
+    "otp mobile friendly"
+  ],
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
