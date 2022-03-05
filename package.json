@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib ./src/libs.js",
+    "build:lib": "vue-cli-service build --target lib ./src/libs.js",
+    "build:page": "vue-cli-service build --dest page",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
