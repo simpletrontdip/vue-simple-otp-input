@@ -17,7 +17,7 @@ Based on my expericences with the existing libs, I created this to handle all my
 
 # Demo
 
-Look at the App.vue for more detail
+Look at the App.vue for more detail, or try it [here](/demo)
 
 ```jsx
     <section class="story">
