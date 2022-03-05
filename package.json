@@ -1,6 +1,6 @@
 {
   "name": "simple-otp-input",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -36,6 +36,11 @@
       "parser": "babel-eslint"
     },
     "rules": {}
+  },
+  "standard-version": {
+    "scripts": {
+      "prerelease": "yarn lint && yarn build:lib"
+    }
   },
   "browserslist": [
     "> 1%",
