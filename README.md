@@ -57,3 +57,19 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
       <div><strong>Submitted</strong> {{ submittedOtp }}</div>
     </section>
 ```
+
+# Props
+
+| Prop         | Default  | Description                                                                                                   |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------- |
+| length       | `6`      | Length of this otp input                                                                                      |
+| value        | `''`     | Initial value for this input, in rare cases, you may need to use `setOtpValue` to force update internal state |
+| type         | `'text'` | Html input type of each input, you may find `'password'` useful                                               |
+| inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                 |
+
+# Events
+
+| Event    | Description                                         |
+| -------- | --------------------------------------------------- |
+| change   | Emit on every update on otp input                   |
+| complete | Emit on key `enter`, emitted `otp` may not complete |
