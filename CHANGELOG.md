@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.13](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.12...v0.1.13) (2022-03-07)
+
+
+### Features
+
+* handle paste event on child, better support mobile device paste ([28cc9b3](https://github.com/simpletrontdip/vue-simple-otp-input/commit/28cc9b325de4a4f1397422ca07ef3cb4fbee9eb4))
+
 ### [0.1.12](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.11...v0.1.12) (2022-03-07)
 
 
