@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.11...v0.1.12) (2022-03-07)
+
+
+### Features
+
+* add extra slot to allow component to customize input effect ([985cb35](https://github.com/simpletrontdip/vue-simple-otp-input/commit/985cb35ea9d1fa66342086489ead3ca20ddfee31))
+* add pasteDelayMs to allow updating value in a more realistic way ([f9c964b](https://github.com/simpletrontdip/vue-simple-otp-input/commit/f9c964b036517da13185a5377c559200efe8d527))
+* **demo:** update demo for border effect with paste delay ([006c2dd](https://github.com/simpletrontdip/vue-simple-otp-input/commit/006c2dd674da63eb5cee436bef2f8f585ab52f12))
+* **docs:** update example code, extra props, slot to documentation ([11a8b7e](https://github.com/simpletrontdip/vue-simple-otp-input/commit/11a8b7eb90c3ca69a6c07cc63c8bd369c955d648))
+
 ### [0.1.11](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.10...v0.1.11) (2022-03-07)
 
 
