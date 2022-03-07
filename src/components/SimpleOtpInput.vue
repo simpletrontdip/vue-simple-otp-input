@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       otp: this.value ? Array.from(this.value) : new Array(this.length).fill(),
+      lastKey: null,
     };
   },
   methods: {
@@ -101,15 +102,19 @@ export default {
       }
 
       if (event.keyCode === ENTER) {
-        // complete
+        // complete on Enter
         this.$emit("complete", this.getOtpValue());
       }
 
-      // On Backspace or left arrow, go to the previous field.
-      if (
-        (event.keyCode === BACKSPACE || event.keyCode === LEFT_ARROW) &&
-        idx > 0
+      if (event.keyCode === LEFT_ARROW && idx > 0) {
+        // Left arrow, go to the previous field.
+        this.$refs.inputs[idx - 1].select();
+      } else if (
+        event.keyCode === BACKSPACE &&
+        idx > 0 &&
+        (!this.otp[idx + 1] || this.lastKey === BACKSPACE)
       ) {
+        // Backspace, only go to prev field if the next field is empty or they type it twice
         this.$refs.inputs[idx - 1].select();
       } else if (event.keyCode !== BACKSPACE && idx < this.length - 1) {
         this.$refs.inputs[idx + 1].select();
@@ -122,6 +127,7 @@ export default {
         this.otp[idx] = event.target.value;
       }
 
+      this.lastKey = event.keyCode;
       this.$emit("change", this.getOtpValue());
     },
   },
