@@ -46,6 +46,10 @@ export default {
       type: String,
       default: undefined,
     },
+    pasteDelayMs: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -70,9 +74,16 @@ export default {
       this.otp[idx] = el.value = data[0];
       data = data.substring(1);
 
+      // focus this element, emit change each update
+      // this give user a better change recognition
+      el.select();
+      this.$emit("change", this.getOtpValue());
+
       if (idx < this.length - 1 && data.length) {
         // Do the same with the next element and next data
-        this.populateNext(data, idx + 1);
+        setTimeout(() => {
+          this.populateNext(data, idx + 1);
+        }, this.pasteDelayMs);
       }
     },
     childFocus(_e, idx) {
@@ -107,6 +118,9 @@ export default {
         this.$emit("complete", this.getOtpValue());
       }
 
+      const value = event.target.value;
+      const count = value.length;
+
       if (event.keyCode === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
         this.$refs.inputs[idx - 1].select();
@@ -117,19 +131,23 @@ export default {
       ) {
         // Backspace, only go to prev field if the next field is empty or they type it twice
         this.$refs.inputs[idx - 1].select();
-      } else if (event.keyCode !== BACKSPACE && idx < this.length - 1) {
+      } else if (
+        event.keyCode !== BACKSPACE &&
+        count === 1 &&
+        idx < this.length - 1
+      ) {
         this.$refs.inputs[idx + 1].select();
       }
 
       // If the target is populated to quickly, value length can be > 1
-      if (event.target.value.length > 1) {
-        this.setOtpValue(event.target.value, idx);
+      if (count > 1) {
+        this.setOtpValue(value, idx);
       } else {
-        this.otp[idx] = event.target.value;
+        this.otp[idx] = value;
+        this.$emit("change", this.getOtpValue());
       }
 
       this.lastKey = event.keyCode;
-      this.$emit("change", this.getOtpValue());
     },
   },
 };
