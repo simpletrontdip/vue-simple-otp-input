@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.10...v0.1.11) (2022-03-07)
+
+
+### Features
+
+* **docs:** add props and events table ([761a277](https://github.com/simpletrontdip/vue-simple-otp-input/commit/761a277dab92d4f941dc3f743b415fc1ddbea016))
+* **UX:** better handling backspace key, allow editing 1 specific box ([81d16b4](https://github.com/simpletrontdip/vue-simple-otp-input/commit/81d16b4d9d92194dcce9f56755477474beaec9b7))
+
 ### [0.1.10](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.9...v0.1.10) (2022-03-05)
 
 
