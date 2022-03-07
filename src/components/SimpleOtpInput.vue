@@ -1,17 +1,18 @@
 <template>
   <div class="simple-otp-input">
-    <input
-      v-for="(_, idx) in length"
-      :key="idx"
-      ref="inputs"
-      :value="otp[idx]"
-      :autocomplete="idx === 0 ? 'one-time-code' : 'off'"
-      :type="type"
-      inputmode="numeric"
-      :class="['otp-single-input', inputClasses]"
-      @focus="childFocus($event, idx)"
-      @keyup="childKeyUp($event, idx)"
-    />
+    <div v-for="(_, idx) in length" :key="idx" class="single-input-container">
+      <input
+        ref="inputs"
+        :value="otp[idx]"
+        :autocomplete="idx === 0 ? 'one-time-code' : 'off'"
+        :type="type"
+        inputmode="numeric"
+        :class="['otp-single-input', inputClasses]"
+        @focus="childFocus($event, idx)"
+        @keyup="childKeyUp($event, idx)"
+      />
+      <slot name="extra" :idx="idx" :otp="otp" :length="length"></slot>
+    </div>
   </div>
 </template>
 
@@ -145,6 +146,10 @@ export default {
   width: 2em;
   height: 2em;
   text-align: center;
+}
+
+.single-input-container {
+  position: relative;
   margin: 2px;
 }
 </style>
