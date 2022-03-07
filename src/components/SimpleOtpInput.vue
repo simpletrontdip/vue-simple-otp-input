@@ -10,6 +10,7 @@
         :class="['otp-single-input', inputClasses]"
         @focus="childFocus($event, idx)"
         @keyup="childKeyUp($event, idx)"
+        @paste="childPaste($event, idx)"
       />
       <slot name="extra" :idx="idx" :otp="otp" :length="length"></slot>
     </div>
@@ -24,7 +25,7 @@ const CTRL = 17;
 const ALT = 18;
 const TAB = 9;
 const ENTER = 13;
-const CMD = 224;
+const CMD = 91;
 
 export default {
   name: "SimpleOtpInput",
@@ -61,11 +62,17 @@ export default {
     getOtpValue() {
       return this.otp.map((item) => item || " ").join("");
     },
+    /**
+     * Set multiple OTP input value sequentially, auto focus on last reachable input.
+     * Use this inside keyup with single input may prevent LEFT_ARROW, BACKSPACE to take effect
+     */
     setOtpValue(data, startIdx = 0) {
-      if (!data || data.length === 1) {
+      if (!data) {
         return;
       }
 
+      // Focus on startIdx
+      this.$refs.inputs[startIdx].select();
       this.populateNext(data, startIdx);
     },
     populateNext(data, idx) {
@@ -74,16 +81,20 @@ export default {
       this.otp[idx] = el.value = data[0];
       data = data.substring(1);
 
-      // focus this element, emit change each update
+      // Emit change each update
       // this give user a better change recognition
-      el.select();
       this.$emit("change", this.getOtpValue());
 
-      if (idx < this.length - 1 && data.length) {
-        // Do the same with the next element and next data
-        setTimeout(() => {
-          this.populateNext(data, idx + 1);
-        }, this.pasteDelayMs);
+      if (idx < this.length - 1) {
+        // Not the last input, then focus to next input
+        this.$refs.inputs[idx + 1].select();
+
+        if (data.length) {
+          setTimeout(() => {
+            // Update next input with the data
+            this.populateNext(data, idx + 1);
+          }, this.pasteDelayMs);
+        }
       }
     },
     childFocus(_e, idx) {
@@ -108,7 +119,8 @@ export default {
         event.keyCode === TAB ||
         event.keyCode === CMD ||
         event.keyCode === ALT ||
-        event.keyCode === CTRL
+        event.keyCode === CTRL ||
+        event.keyCode === 224
       ) {
         return;
       }
@@ -133,14 +145,16 @@ export default {
         this.$refs.inputs[idx - 1].select();
       } else if (
         event.keyCode !== BACKSPACE &&
+        event.keyCode !== LEFT_ARROW &&
         count === 1 &&
         idx < this.length - 1
       ) {
         this.$refs.inputs[idx + 1].select();
       }
 
-      // If the target is populated to quickly, value length can be > 1
+      // If the target is populated to quickly, count can be > 1
       if (count > 1) {
+        // set multiple value with effects
         this.setOtpValue(value, idx);
       } else {
         this.otp[idx] = value;
@@ -148,6 +162,13 @@ export default {
       }
 
       this.lastKey = event.keyCode;
+    },
+    childPaste(event, idx) {
+      event.preventDefault();
+      const value = event.clipboardData.getData("text/plain");
+
+      // set multiple value with effects
+      this.setOtpValue(value, idx);
     },
   },
 };
