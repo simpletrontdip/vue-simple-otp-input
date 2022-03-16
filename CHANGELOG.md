@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.13...v0.1.14) (2022-03-16)
+
+
+### Features
+
+* **chrome:** add input event handler, to better support chome auto suggestion event ([147986d](https://github.com/simpletrontdip/vue-simple-otp-input/commit/147986d97624ae309dba13de20b8d2144ed52f94))
+
 ### [0.1.13](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.12...v0.1.13) (2022-03-07)
 
 
