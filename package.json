@@ -19,12 +19,13 @@
     "*.js"
   ],
   "keywords": [
-    "vue2otpinput",
+    "vue2 otp input",
     "vue2",
     "vue",
     "otp",
     "input",
     "otpinput",
+    "otp auto complete",
     "otp mobile friendly"
   ],
   "dependencies": {

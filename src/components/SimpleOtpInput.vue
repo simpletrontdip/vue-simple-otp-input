@@ -11,6 +11,7 @@
         @focus="childFocus($event, idx)"
         @keyup="childKeyUp($event, idx)"
         @paste="childPaste($event, idx)"
+        @input="childInput($event, idx)"
       />
       <slot name="extra" :idx="idx" :otp="otp" :length="length"></slot>
     </div>
@@ -113,19 +114,21 @@ export default {
       }
     },
     childKeyUp(event, idx) {
+      let { keyCode } = event;
+
       // Ignore system modifiers keys
       if (
-        event.keyCode === SHIFT ||
-        event.keyCode === TAB ||
-        event.keyCode === CMD ||
-        event.keyCode === ALT ||
-        event.keyCode === CTRL ||
-        event.keyCode === 224
+        keyCode === SHIFT ||
+        keyCode === TAB ||
+        keyCode === CMD ||
+        keyCode === ALT ||
+        keyCode === CTRL ||
+        keyCode === 224
       ) {
         return;
       }
 
-      if (event.keyCode === ENTER) {
+      if (keyCode === ENTER) {
         // complete on Enter
         this.$emit("complete", this.getOtpValue());
       }
@@ -133,24 +136,46 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
-      if (event.keyCode === LEFT_ARROW && idx > 0) {
+      if (keyCode === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
         this.$refs.inputs[idx - 1].select();
       } else if (
-        event.keyCode === BACKSPACE &&
+        // XXX count == 0 => we are deleting input content
+        // This handles virtual keyboard better
+        !count &&
         idx > 0 &&
-        (!this.otp[idx + 1] || this.lastKey === BACKSPACE)
+        (!this.otp[idx + 1] || this.lastKey === keyCode)
       ) {
         // Backspace, only go to prev field if the next field is empty or they type it twice
         this.$refs.inputs[idx - 1].select();
       } else if (
-        event.keyCode !== BACKSPACE &&
-        event.keyCode !== LEFT_ARROW &&
+        keyCode !== BACKSPACE &&
+        keyCode !== LEFT_ARROW &&
         count === 1 &&
         idx < this.length - 1
       ) {
         this.$refs.inputs[idx + 1].select();
       }
+
+      if (count > 1) {
+        // set multiple value with effects
+        // The single char should be handled by Input
+        this.setOtpValue(value, idx);
+      }
+
+      this.lastKey = keyCode;
+    },
+    childPaste(event, idx) {
+      event.preventDefault();
+      const value = event.clipboardData.getData("text/plain");
+
+      // set multiple value with effects
+      this.setOtpValue(value, idx);
+    },
+    childInput(event, idx) {
+      // handle paste on Chrome
+      const value = event.target.value;
+      const count = value.length;
 
       // If the target is populated to quickly, count can be > 1
       if (count > 1) {
@@ -160,15 +185,6 @@ export default {
         this.otp[idx] = value;
         this.$emit("change", this.getOtpValue());
       }
-
-      this.lastKey = event.keyCode;
-    },
-    childPaste(event, idx) {
-      event.preventDefault();
-      const value = event.clipboardData.getData("text/plain");
-
-      // set multiple value with effects
-      this.setOtpValue(value, idx);
     },
   },
 };
