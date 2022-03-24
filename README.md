@@ -13,9 +13,12 @@ Simple but effective Otp input (for Vue2 only)
 This is simple to do, but also hard to make it work correctly and handle all the case for otp.
 Based on my expericences with the existing libs, I created this to handle all my needs. Hope it helps you as well.
 
-Video for autofill in mobile page (from a friend)
+Video for autofill in mobile page (from friends)
 
-https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4
+[![Safari Autocomplete]](https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4 "Safari")
+
+[![Chrome Autocomplete]](https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4 "Chrome")
+
 
 # Install
 
@@ -120,3 +123,6 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 ```
 
 - Or just simply overriding it by your class name.
+
+
+
