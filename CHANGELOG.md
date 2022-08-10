@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.16](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.15...v0.1.16) (2022-08-10)
+
+
+### Bug Fixes
+
+* **event:** update inner otp by $set to trigger reactivity ([ce42b5c](https://github.com/simpletrontdip/vue-simple-otp-input/commit/ce42b5c5e2a73e3587a2eeefe771c2ea3c91ee77))
+
 ### [0.1.15](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.14...v0.1.15) (2022-08-10)
 
 
