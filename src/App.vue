@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import SimpleOtpInput from "./components/SimpleOtpInput.vue";
+import SimpleOtpInput from "@/components/SimpleOtpInput.vue";
 
 export default {
   name: "App",
