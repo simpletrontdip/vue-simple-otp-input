@@ -30,7 +30,7 @@ const CMD = 91;
 
 export default {
   name: "SimpleOtpInput",
-  emits: ["change", "complete"],
+  emits: ["update", "change", "complete"],
   props: {
     length: {
       type: Number,
@@ -59,9 +59,38 @@ export default {
       lastKey: null,
     };
   },
-  methods: {
-    getOtpValue() {
+  computed: {
+    otpValue() {
       return this.otp.map((item) => item || " ").join("");
+    },
+  },
+  watch: {
+    value(val) {
+      if (val !== this.otpValue) {
+        this.otp = Array.from(this.value);
+      }
+    },
+  },
+  methods: {
+    emitChange() {
+      // this give user a better change recognition
+      this.$emit("change", this.otpValue);
+      // mimicking event.target.value to support v-model
+      this.$emit("update", { target: { value: this.otpValue } });
+    },
+    emitComplete() {
+      this.$emit("complete", this.otpValue);
+    },
+    emitEvents(idx) {
+      this.emitChange();
+
+      if (idx === this.length - 1) {
+        // emit events on last index
+        this.emitComplete();
+      }
+    },
+    getOtpValue() {
+      return this.otpValue;
     },
     /**
      * Set multiple OTP input value sequentially, auto focus on last reachable input.
@@ -82,9 +111,8 @@ export default {
       this.otp[idx] = el.value = data[0];
       data = data.substring(1);
 
-      // Emit change each update
-      // this give user a better change recognition
-      this.$emit("change", this.getOtpValue());
+      // Emit change each input update
+      this.emitEvents(idx);
 
       if (idx < this.length - 1) {
         // Not the last input, then focus to next input
@@ -130,7 +158,7 @@ export default {
 
       if (keyCode === ENTER) {
         // complete on Enter
-        this.$emit("complete", this.getOtpValue());
+        this.emitComplete();
       }
 
       const value = event.target.value;
@@ -183,7 +211,8 @@ export default {
         this.setOtpValue(value, idx);
       } else {
         this.otp[idx] = value;
-        this.$emit("change", this.getOtpValue());
+        // Emit change for this
+        this.emitEvents(idx);
       }
     },
   },
