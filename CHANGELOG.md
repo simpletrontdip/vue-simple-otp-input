@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.14...v0.1.15) (2022-08-10)
+
+
+### Features
+
+* emit update event, watch value to support v-model ([6c79c64](https://github.com/simpletrontdip/vue-simple-otp-input/commit/6c79c64601a29eb5919a3a08714f63f9b09b14fe))
+
 ### [0.1.14](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.13...v0.1.14) (2022-03-16)
 
 
