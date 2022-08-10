@@ -13,7 +13,12 @@
         @paste="childPaste($event, idx)"
         @input="childInput($event, idx)"
       />
-      <slot name="extra" :idx="idx" :otp="otp" :length="length"></slot>
+      <slot
+        name="extra"
+        v-bind:idx="idx"
+        v-bind:otp="otp"
+        v-bind:length="length"
+      ></slot>
     </div>
   </div>
 </template>
