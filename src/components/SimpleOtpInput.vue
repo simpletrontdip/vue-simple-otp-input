@@ -107,8 +107,9 @@ export default {
     },
     populateNext(data, idx) {
       // set the value to model and element as well
-      const el = this.$refs.inputs[idx];
-      this.otp[idx] = el.value = data[0];
+      this.$refs.inputs[idx].value = data[0];
+      this.$set(this.otp, idx, data[0]);
+
       data = data.substring(1);
 
       // Emit change each input update
