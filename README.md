@@ -19,7 +19,6 @@ Video for autofill in mobile page (from friends)
 
 [![Chrome Autocomplete]](https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4 "Chrome")
 
-
 # Install
 
 ```
@@ -77,18 +76,19 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 
 # Props
 
-| Prop         | Default  | Description                                                                                                   |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------------------- |
-| length       | `6`      | Length of this otp input                                                                                      |
-| value        | `''`     | Initial value for this input, in rare cases, you may need to use `setOtpValue` to force update internal state |
-| type         | `'text'` | Html input type of each input, you may find `'password'` useful                                               |
-| inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                 |
-| pasteDelayMs | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                         |
+| Prop         | Default  | Description                                                                                                                 |
+| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| length       | `6`      | Length of this otp input                                                                                                    |
+| value        | `''`     | Value for this input, v-model is supported, in rare cases, you may need to use `setOtpValue` to force update internal state |
+| type         | `'text'` | Html input type of each input, you may find `'password'` useful                                                             |
+| inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                               |
+| pasteDelayMs | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                                       |
 
 # Events
 
 | Event    | Description                                         |
 | -------- | --------------------------------------------------- |
+| update   | Emit on every update on otp input, support v-model  |
 | change   | Emit on every update on otp input                   |
 | complete | Emit on key `enter`, emitted `otp` may not complete |
 
@@ -123,6 +123,3 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 ```
 
 - Or just simply overriding it by your class name.
-
-
-

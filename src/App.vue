@@ -26,6 +26,15 @@
       <div><strong>Submitted</strong> {{ submittedOtp }}</div>
     </section>
     <section class="story">
+      <label>Lazy v-model </label>
+      <button @click="setLazyCodeValue">Randomize code value</button>
+      <SimpleOtpInput
+        class="otp-with-effect"
+        inputClasses="input-with-effect"
+        v-model="lazyCode"
+      />
+    </section>
+    <section class="story">
       <label>With extra slot to create border effect</label>
       <SimpleOtpInput
         class="otp-with-effect"
@@ -54,6 +63,7 @@ export default {
     return {
       otp: "",
       submittedOtp: "",
+      lazyCode: "",
     };
   },
   methods: {
@@ -64,6 +74,10 @@ export default {
     handleComplete(v) {
       this.submittedOtp = v;
       console.log("Submitted", v);
+    },
+    setLazyCodeValue() {
+      this.lazyCode = Math.random().toString().substring(2, 8);
+      console.log("Lazy code", this.lazyCode);
     },
   },
 };
