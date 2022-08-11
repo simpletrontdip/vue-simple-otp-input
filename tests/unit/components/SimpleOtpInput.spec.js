@@ -1,4 +1,10 @@
-import { render, screen, cleanup } from "@testing-library/vue";
+import {
+  render,
+  screen,
+  cleanup,
+  fireEvent,
+  waitFor,
+} from "@testing-library/vue";
 import { mount } from "@vue/test-utils";
 
 import SimpleOtpInput from "@/components/SimpleOtpInput";
@@ -10,11 +16,16 @@ const randomText = (length) => {
 };
 
 describe("SimpleOtpInput", () => {
-  afterEach(cleanup);
-
   describe("contents", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
     it("should render correct default", () => {
-      const wrapper = render(SimpleOtpInput);
+      wrapper = render(SimpleOtpInput);
 
       const inputs = screen.queryAllByRole("textbox");
       expect(inputs.length).toBe(6);
@@ -23,7 +34,7 @@ describe("SimpleOtpInput", () => {
     });
 
     it("should forward `inputClasses`, `type` to inner inputs", () => {
-      const wrapper = render(SimpleOtpInput, {
+      wrapper = render(SimpleOtpInput, {
         props: {
           inputClasses: "some-class or-more-class",
           type: "number",
@@ -45,7 +56,7 @@ describe("SimpleOtpInput", () => {
       [4, 5, 6, 7].forEach((length) => {
         const value = randomText(length);
 
-        render(SimpleOtpInput, {
+        const wrapper = render(SimpleOtpInput, {
           props: {
             length,
             value,
@@ -60,6 +71,7 @@ describe("SimpleOtpInput", () => {
         });
 
         cleanup();
+        wrapper.unmount();
       });
     });
 
@@ -86,6 +98,101 @@ describe("SimpleOtpInput", () => {
 
       expect(wrapper.text().replaceAll(" ", "")).toBe(value);
       expect(wrapper.html()).toMatchSnapshot();
+
+      wrapper.destroy();
+    });
+  });
+
+  describe("events", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    it("should emit `change` on every update", async () => {
+      const handleChange = jest.fn();
+
+      wrapper = render({
+        template: `<SimpleOtpInput @change="handleChange" />`,
+        components: {
+          SimpleOtpInput,
+        },
+        methods: {
+          handleChange,
+        },
+      });
+
+      const input = document.querySelector("input");
+
+      await fireEvent.update(input, "123");
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledTimes(3);
+      });
+    });
+
+    it("should emit `complete` on last input update or 'enter' key", async () => {
+      const handleComplete = jest.fn();
+
+      wrapper = render({
+        template: `<SimpleOtpInput @complete="handleComplete" />`,
+        components: {
+          SimpleOtpInput,
+        },
+        methods: {
+          handleComplete,
+        },
+      });
+
+      const input = document.querySelector("input");
+
+      await fireEvent.update(input, "123456");
+      await waitFor(() => {
+        expect(handleComplete).toHaveBeenCalledTimes(1);
+      });
+
+      await fireEvent.keyUp(input, { keyCode: 13 });
+      await waitFor(() => {
+        expect(handleComplete).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    it("should support v-model", async () => {
+      wrapper = render({
+        data() {
+          return { otp: "" };
+        },
+        template: `<div>
+        <SimpleOtpInput v-model="otp" />
+        <div data-testid="output">{{ otp }}</div>
+        <button data-testid="button" @click="setOtpValue">Update</button>
+        </div>`,
+        components: {
+          SimpleOtpInput,
+        },
+        methods: {
+          setOtpValue() {
+            this.otp = "654321";
+          },
+        },
+      });
+
+      const input = document.querySelector("input");
+      const output = document.querySelector("[data-testid='output']");
+      const button = document.querySelector("[data-testid='button']");
+
+      // update from input
+      await fireEvent.update(input, "123");
+      await waitFor(() => {
+        expect(output.innerHTML.trim()).toBe("123");
+      });
+
+      // set from outside
+      await fireEvent.click(button);
+      await waitFor(() => {
+        expect(output.innerHTML.trim()).toBe("654321");
+      });
     });
   });
 });

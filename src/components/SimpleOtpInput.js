@@ -55,7 +55,7 @@ export default {
       // this give user a better change recognition
       this.$emit("change", this.otpValue);
       // mimicking event.target.value to support v-model
-      this.$emit("update", { target: { value: this.otpValue } });
+      this.$emit("input", this.otpValue);
     },
     emitComplete() {
       this.$emit("complete", this.otpValue);
@@ -190,7 +190,8 @@ export default {
         // set multiple value with effects
         this.setOtpValue(value, idx);
       } else {
-        this.otp[idx] = value;
+        // update single value
+        this.$set(this.otp, idx, value);
         // Emit change for this
         this.emitEvents(idx);
       }
