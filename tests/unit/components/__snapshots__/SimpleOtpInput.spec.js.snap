@@ -2,41 +2,41 @@
 
 exports[`SimpleOtpInput contents should forward \`inputClasses\`, \`type\` to inner inputs 1`] = `
 <div class="simple-otp-input">
-  <div class="single-input-container"><input autocomplete="one-time-code" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input some-class or-more-class"> </div>
+  <div class="single-input-container"><input autocomplete="one-time-code" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" class="otp-single-input some-class or-more-class"></div>
 </div>
 `;
 
 exports[`SimpleOtpInput contents should render correct default 1`] = `
 <div class="simple-otp-input">
-  <div class="single-input-container"><input autocomplete="one-time-code" type="text" inputmode="numeric" class="otp-single-input"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> </div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> </div>
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"></div>
 </div>
 `;
 
 exports[`SimpleOtpInput contents should render slot \`extra\` correctly 1`] = `
 <div class="simple-otp-input">
-  <div class="single-input-container"><input autocomplete="one-time-code" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>S</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>i</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>m</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>p</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>l</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>e</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>O</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>t</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>p</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>I</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>n</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>p</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>u</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" class="otp-single-input"> <span class="extra-slot"><i>t</i></span></div>
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" class="otp-single-input"><span class="extra-slot"><i>S</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>i</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>m</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>p</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>l</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>e</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>O</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>t</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>p</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>I</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>n</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>p</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>u</i></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" class="otp-single-input"><span class="extra-slot"><i>t</i></span></div>
 </div>
 `;

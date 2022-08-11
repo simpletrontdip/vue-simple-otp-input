@@ -1,29 +1,3 @@
-<template>
-  <div class="simple-otp-input">
-    <div v-for="(_, idx) in length" :key="idx" class="single-input-container">
-      <input
-        ref="inputs"
-        :value="otp[idx]"
-        :autocomplete="idx === 0 ? 'one-time-code' : 'off'"
-        :type="type"
-        inputmode="numeric"
-        :class="['otp-single-input', inputClasses]"
-        @focus="childFocus($event, idx)"
-        @keyup="childKeyUp($event, idx)"
-        @paste="childPaste($event, idx)"
-        @input="childInput($event, idx)"
-      />
-      <slot
-        name="extra"
-        v-bind:idx="idx"
-        v-bind:otp="otp"
-        v-bind:length="length"
-      ></slot>
-    </div>
-  </div>
-</template>
-
-<script>
 const BACKSPACE = 8;
 const LEFT_ARROW = 37;
 const SHIFT = 16;
@@ -222,24 +196,33 @@ export default {
       }
     },
   },
+
+  render() {
+    const { type, length, inputClasses } = this.$props;
+    const { extra } = this.$scopedSlots;
+    const { otp } = this.$data;
+
+    return (
+      <div class="simple-otp-input">
+        {otp.map((number, idx) => (
+          <div key={idx} class="single-input-container">
+            <input
+              ref="inputs"
+              refInFor
+              value={number}
+              autocomplete={idx === 0 ? "one-time-code" : "off"}
+              type={type}
+              inputmode={type === "number" ? "numeric" : undefined}
+              class={["otp-single-input", inputClasses]}
+              onFocus={(event) => this.childFocus(event, idx)}
+              onKeyup={(event) => this.childKeyUp(event, idx)}
+              onPaste={(event) => this.childPaste(event, idx)}
+              onInput={(event) => this.childInput(event, idx)}
+            />
+            {extra && extra({ otp, idx, length })}
+          </div>
+        ))}
+      </div>
+    );
+  },
 };
-</script>
-<style scoped>
-.simple-otp-input {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.otp-single-input {
-  padding: 4px;
-  width: 2em;
-  height: 2em;
-  text-align: center;
-}
-
-.single-input-container {
-  position: relative;
-  margin: 2px;
-}
-</style>

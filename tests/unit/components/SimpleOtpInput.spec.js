@@ -26,10 +26,11 @@ describe("SimpleOtpInput", () => {
       const wrapper = render(SimpleOtpInput, {
         props: {
           inputClasses: "some-class or-more-class",
+          type: "number",
         },
       });
 
-      const inputs = screen.queryAllByRole("textbox");
+      const inputs = document.querySelectorAll("input");
       expect(inputs.length).toBe(6);
 
       inputs.forEach((el) => {

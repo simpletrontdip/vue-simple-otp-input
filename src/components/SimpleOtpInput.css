@@ -1,0 +1,17 @@
+.simple-otp-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-single-input {
+  padding: 4px;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+}
+
+.single-input-container {
+  position: relative;
+  margin: 2px;
+}
