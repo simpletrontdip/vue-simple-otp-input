@@ -368,6 +368,28 @@ describe("SimpleOtpInput", () => {
       expect(value.trim()).toBe("A  D");
       expect(document.activeElement).toEqual(inputs[0]);
     });
+
+    it("should not interfere system default binding", async () => {
+      const user = userEvent.setup();
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value: "1234",
+          length: 4,
+        },
+      });
+      const inputs = document.querySelectorAll("input");
+
+      // focus on first input
+      await user.click(inputs[0]);
+
+      // 1 -{tab}{tab}-> 3
+      await user.keyboard("{tab}{tab}");
+      expect(document.activeElement).toBe(inputs[2]);
+
+      // 2 -{shift-tab}-> 1
+      await user.tab({ shift: true });
+      expect(document.activeElement).toBe(inputs[1]);
+    });
   });
 
   describe("pasting", () => {
