@@ -1,15 +1,21 @@
-const BACKSPACE = 8;
-const LEFT_ARROW = 37;
-const SHIFT = 16;
-const CTRL = 17;
-const ALT = 18;
-const TAB = 9;
-const ENTER = 13;
-const CMD = 91;
+const BACKSPACE = "Backspace";
+const LEFT_ARROW = "ArrowLeft";
+const SHIFT = "Shift";
+const CTRL = "Ctrl";
+const ALT = "Alt";
+const TAB = "Tab";
+const ENTER = "Enter";
+
+const CMD_CODE = 91;
+
+const fillArrToLength = (str, len, val = "") => {
+  const remain = Math.max(len - str.length, 0);
+  return Array.from(str).concat(new Array(remain).fill(val)).slice(0, len);
+};
 
 export default {
   name: "SimpleOtpInput",
-  emits: ["update", "change", "complete"],
+  emits: ["input", "change", "complete"],
   props: {
     length: {
       type: Number,
@@ -34,7 +40,7 @@ export default {
   },
   data() {
     return {
-      otp: this.value ? Array.from(this.value) : new Array(this.length).fill(),
+      otp: fillArrToLength(this.value, this.length),
       lastKey: null,
     };
   },
@@ -46,7 +52,7 @@ export default {
   watch: {
     value(val) {
       if (val !== this.otpValue) {
-        this.otp = Array.from(this.value);
+        this.otp = fillArrToLength(val, this.length);
       }
     },
   },
@@ -54,7 +60,7 @@ export default {
     emitChange() {
       // this give user a better change recognition
       this.$emit("change", this.otpValue);
-      // mimicking event.target.value to support v-model
+      // mimicking to support v-model
       this.$emit("input", this.otpValue);
     },
     emitComplete() {
@@ -67,6 +73,11 @@ export default {
         // emit events on last index
         this.emitComplete();
       }
+    },
+    focusInput(idx) {
+      // some browsers do `focus` on `select`, but we call both for certainity
+      this.$refs.inputs[idx].focus();
+      this.$refs.inputs[idx].select();
     },
     getOtpValue() {
       return this.otpValue;
@@ -81,7 +92,7 @@ export default {
       }
 
       // Focus on startIdx
-      this.$refs.inputs[startIdx].select();
+      this.focusInput(startIdx);
       this.populateNext(data, startIdx);
     },
     populateNext(data, idx) {
@@ -96,7 +107,7 @@ export default {
 
       if (idx < this.length - 1) {
         // Not the last input, then focus to next input
-        this.$refs.inputs[idx + 1].select();
+        this.focusInput(idx + 1);
 
         if (data.length) {
           setTimeout(() => {
@@ -107,36 +118,33 @@ export default {
       }
     },
     childFocus(_e, idx) {
-      if (idx === 0) {
-        return;
-      }
-
       // If value of input 1 is empty, focus it.
-      if (this.$refs.inputs[0].value === "") {
-        this.$refs.inputs[0].focus();
+      if (idx === 0 || this.$refs.inputs[0].value === "") {
+        this.focusInput(0);
+        return;
       }
 
       // If value of a previous input is empty, focus it.
       if (this.$refs.inputs[idx - 1].value === "") {
-        this.$refs.inputs[idx - 1].focus();
+        this.focusInput(idx - 1);
       }
     },
     childKeyUp(event, idx) {
-      let { keyCode } = event;
+      let { keyCode, key } = event;
 
       // Ignore system modifiers keys
       if (
-        keyCode === SHIFT ||
-        keyCode === TAB ||
-        keyCode === CMD ||
-        keyCode === ALT ||
-        keyCode === CTRL ||
+        key === SHIFT ||
+        key === TAB ||
+        key === ALT ||
+        key === CTRL ||
+        keyCode === CMD_CODE ||
         keyCode === 224
       ) {
         return;
       }
 
-      if (keyCode === ENTER) {
+      if (key === ENTER) {
         // complete on Enter
         this.emitComplete();
       }
@@ -144,25 +152,25 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
-      if (keyCode === LEFT_ARROW && idx > 0) {
+      if (key === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
-        this.$refs.inputs[idx - 1].select();
+        this.focusInput(idx - 1);
       } else if (
         // XXX count == 0 => we are deleting input content
         // This handles virtual keyboard better
         !count &&
         idx > 0 &&
-        (!this.otp[idx + 1] || this.lastKey === keyCode)
+        (!this.otp[idx + 1] || this.lastKey === key)
       ) {
         // Backspace, only go to prev field if the next field is empty or they type it twice
-        this.$refs.inputs[idx - 1].select();
+        this.focusInput(idx - 1);
       } else if (
-        keyCode !== BACKSPACE &&
-        keyCode !== LEFT_ARROW &&
+        key !== BACKSPACE &&
+        key !== LEFT_ARROW &&
         count === 1 &&
         idx < this.length - 1
       ) {
-        this.$refs.inputs[idx + 1].select();
+        this.focusInput(idx + 1);
       }
 
       if (count > 1) {
@@ -171,7 +179,7 @@ export default {
         this.setOtpValue(value, idx);
       }
 
-      this.lastKey = keyCode;
+      this.lastKey = key;
     },
     childPaste(event, idx) {
       event.preventDefault();
@@ -219,6 +227,7 @@ export default {
               onKeyup={(event) => this.childKeyUp(event, idx)}
               onPaste={(event) => this.childPaste(event, idx)}
               onInput={(event) => this.childInput(event, idx)}
+              data-testid={`otp-single-input-${idx}`}
             />
             {extra && extra({ otp, idx, length })}
           </div>
