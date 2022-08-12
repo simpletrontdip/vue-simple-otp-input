@@ -290,7 +290,6 @@ describe("SimpleOtpInput", () => {
       const user = userEvent.setup();
 
       let value = "1234";
-      const handleComplete = jest.fn();
 
       wrapper = render(SimpleOtpInput, {
         props: {
@@ -301,12 +300,11 @@ describe("SimpleOtpInput", () => {
           change: (val) => {
             value = val;
           },
-          complete: handleComplete,
         },
       });
       const inputs = document.querySelectorAll("input");
 
-      // it's OK to focus first input
+      // focus first input
       await user.click(inputs[0]);
       expect(document.activeElement).toEqual(inputs[0]);
 
@@ -369,6 +367,55 @@ describe("SimpleOtpInput", () => {
       await user.keyboard("{backspace}");
       expect(value.trim()).toBe("A  D");
       expect(document.activeElement).toEqual(inputs[0]);
+    });
+  });
+
+  describe("pasting", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    it("should handle paste content nicely", async () => {
+      const user = userEvent.setup();
+
+      let value = "";
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value,
+          length: 4,
+        },
+        listeners: {
+          change: (val) => {
+            value = val;
+          },
+        },
+      });
+      const inputs = document.querySelectorAll("input");
+
+      // focus first input
+      await user.click(inputs[0]);
+      await user.paste("ABCD");
+
+      await waitFor(() => {
+        expect(value.trim()).toBe("ABCD");
+        expect(document.activeElement).toBe(inputs[3]);
+      });
+
+      // paste invalid value -> nothing change
+      await user.paste();
+      expect(value.trim()).toBe("ABCD");
+
+      // focus on 2nd input
+      await user.click(inputs[1]);
+      await user.paste("ABCD");
+
+      await waitFor(() => {
+        expect(value.trim()).toBe("AABC");
+        expect(document.activeElement).toBe(inputs[3]);
+      });
     });
   });
 });
