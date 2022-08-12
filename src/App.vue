@@ -28,11 +28,7 @@
     <section class="story">
       <label>Lazy v-model </label>
       <button @click="setLazyCodeValue">Randomize code value</button>
-      <SimpleOtpInput
-        class="otp-with-effect"
-        inputClasses="input-with-effect"
-        v-model="lazyCode"
-      />
+      <SimpleOtpInput v-model="lazyCode" />
     </section>
     <section class="story">
       <label>With extra slot to create border effect</label>

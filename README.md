@@ -1,5 +1,10 @@
 # simple-otp-input
 
+![Coverage lines](https://img.shields.io/badge/Coverage:lines-98.68%25-brightgreen.svg)
+![Coverage functions](https://img.shields.io/badge/Coverage:functions-100%25-brightgreen.svg)
+![Coverage branches](https://img.shields.io/badge/Coverage:branches-98.21%25-brightgreen.svg)
+![Coverage statements](https://img.shields.io/badge/Coverage:statements-98.7%25-brightgreen.svg)
+
 Simple but effective Otp input (for Vue2 only)
 
 - Auto focus next box while typing
@@ -7,6 +12,7 @@ Simple but effective Otp input (for Vue2 only)
 - Handle mobile auto complete nicely
 - Handle delete, arrow keys correctly
 - Support both controlled/uncontrolled in components
+- Fully tested with real life usecases
 
 # Why?
 
@@ -46,7 +52,6 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
       <label>With inital value</label>
       <SimpleOtpInput value="123456" />
     </section>
-
     <section class="story">
       <label>With events</label>
       <SimpleOtpInput
@@ -57,6 +62,11 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
       />
       <div><strong>Draft</strong> {{ otp }}</div>
       <div><strong>Submitted</strong> {{ submittedOtp }}</div>
+    </section>
+    <section class="story">
+      <label>Lazy v-model </label>
+      <button @click="setLazyCodeValue">Randomize code value</button>
+      <SimpleOtpInput v-model="lazyCode" />
     </section>
     <section class="story">
       <label>With extra slot to create border effect</label>
@@ -88,7 +98,7 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 
 | Event    | Description                                         |
 | -------- | --------------------------------------------------- |
-| update   | Emit on every update on otp input, support v-model  |
+| input    | Emit on every change on otp input, support v-model  |
 | change   | Emit on every update on otp input                   |
 | complete | Emit on key `enter`, emitted `otp` may not complete |
 
