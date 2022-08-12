@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.16...v1.0.0) (2022-08-12)
+
+
+### Features
+
+* handle keyboard nicely while `key` instead of keyCode, robus focus+select for testing ([9827386](https://github.com/simpletrontdip/vue-simple-otp-input/commit/9827386fb07c83edebf363c653ae082b6b7256b7))
+* **test:** add basic tests for content section ([04f3c9f](https://github.com/simpletrontdip/vue-simple-otp-input/commit/04f3c9f0cca8162c20b92082e609196933da1336))
+* **test:** add test with tabbing, check the system modifier cases ([307b1bb](https://github.com/simpletrontdip/vue-simple-otp-input/commit/307b1bbd5668d726f0d51d8b47aa434d258f39f3))
+* **test:** add tests for events handling logic ([cfcefae](https://github.com/simpletrontdip/vue-simple-otp-input/commit/cfcefaef0eace6c72b3fe2d99cc2a65e6b47be81))
+* **test:** add tests for instance methods, not sure why ([4cac7d4](https://github.com/simpletrontdip/vue-simple-otp-input/commit/4cac7d48c84e6a752164d85ee6a4b5ba555c8614))
+* **test:** add tests for pasting events ([8512409](https://github.com/simpletrontdip/vue-simple-otp-input/commit/8512409dcf6bf496c474ef5ec0294332c555242a))
+* **test:** separate sfc into 3 files to get better coverage report ([7023bcb](https://github.com/simpletrontdip/vue-simple-otp-input/commit/7023bcbd7235c177d8f139f156c48014c165d0f8))
+* **test:** utilize userEvent to test keyboard event nicer ([f34cb06](https://github.com/simpletrontdip/vue-simple-otp-input/commit/f34cb06266aff06d0799398392e3fac59887ea82))
+
 ### [0.1.16](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.15...v0.1.16) (2022-08-10)
 
 
