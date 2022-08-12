@@ -69,7 +69,7 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "yarn lint && yarn build:lib"
+      "prerelease": "yarn lint && yarn test && yarn build:lib && yarn build:page && git add demo"
     }
   },
   "browserslist": [
