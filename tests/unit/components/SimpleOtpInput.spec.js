@@ -418,4 +418,83 @@ describe("SimpleOtpInput", () => {
       });
     });
   });
+
+  describe("instance api (not recommended, use v-model instead)", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    it("should support `getOtpValue`", async () => {
+      const user = userEvent.setup();
+      const expectedOtpValue = randomText(6);
+
+      wrapper = render({
+        data() {
+          return {
+            expectedOtpValue,
+            outputOtpValue: "",
+          };
+        },
+        template: `<div>
+          <SimpleOtpInput ref="otpInstance" :value="expectedOtpValue" />
+          <div data-testid="output">{{ outputOtpValue }}</div>
+          <button data-testid="button" @click="calulateOtpValue">Calculate</button>
+        </div>`,
+        components: {
+          SimpleOtpInput,
+        },
+        methods: {
+          calulateOtpValue() {
+            this.outputOtpValue = this.$refs.otpInstance.getOtpValue();
+          },
+        },
+      });
+
+      const output = document.querySelector("[data-testid='output']");
+      const button = document.querySelector("[data-testid='button']");
+
+      await user.click(button);
+      await waitFor(() => {
+        expect(output.innerHTML.trim()).toBe(expectedOtpValue);
+      });
+    });
+
+    it("should support `setOtpValue`", async () => {
+      const user = userEvent.setup();
+      const expectedOtpValue = randomText(6);
+
+      wrapper = render({
+        data() {
+          return {
+            expectedOtpValue,
+            outputOtpValue: "",
+          };
+        },
+        template: `<div>
+          <SimpleOtpInput ref="otpInstance" v-model="outputOtpValue" />
+          <div data-testid="output">{{ outputOtpValue }}</div>
+          <button data-testid="button" @click="setOtpValue">Update</button>
+        </div>`,
+        components: {
+          SimpleOtpInput,
+        },
+        methods: {
+          setOtpValue() {
+            this.$refs.otpInstance.setOtpValue(this.expectedOtpValue);
+          },
+        },
+      });
+
+      const output = document.querySelector("[data-testid='output']");
+      const button = document.querySelector("[data-testid='button']");
+
+      await user.click(button);
+      await waitFor(() => {
+        expect(output.innerHTML.trim()).toBe(expectedOtpValue);
+      });
+    });
+  });
 });
