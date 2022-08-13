@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.0.0...v1.1.0) (2022-08-13)
+
+
+### Features
+
+* **doc:** add code coverage badges ([c624f82](https://github.com/simpletrontdip/vue-simple-otp-input/commit/c624f8215a926c6679fea9874ea9fa0484b79268))
+
 ## [1.0.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v0.1.16...v1.0.0) (2022-08-12)
 
 
