@@ -1,9 +1,9 @@
 # simple-otp-input
 
-![Coverage lines](https://img.shields.io/badge/Coverage:lines-98.68%25-brightgreen.svg)
-![Coverage functions](https://img.shields.io/badge/Coverage:functions-100%25-brightgreen.svg)
-![Coverage branches](https://img.shields.io/badge/Coverage:branches-98.21%25-brightgreen.svg)
-![Coverage statements](https://img.shields.io/badge/Coverage:statements-98.7%25-brightgreen.svg)
+![Coverage lines](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/simpletrontdip/vue-simple-otp-input/main/tests/coverage/badges/lines.json)
+![Coverage functions](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/simpletrontdip/vue-simple-otp-input/main/tests/coverage/badges/functions.json)
+![Coverage branches](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/simpletrontdip/vue-simple-otp-input/main/tests/coverage/badges/branches.json)
+![Coverage statements](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/simpletrontdip/vue-simple-otp-input/main/tests/coverage/badges/statements.json)
 
 Simple but effective Otp input (for Vue2 only)
 
@@ -32,7 +32,7 @@ yarn add vue-simple-otp-input
 ```
 
 ```js
-import { SimpleOtpInput } from "vue-simple-otp-input";
+import SimpleOtpInput from "vue-simple-otp-input";
 ```
 
 # Demo
@@ -44,14 +44,17 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
       <label>Default otp input</label>
       <SimpleOtpInput />
     </section>
+
     <section class="story">
       <label>Password type input</label>
       <SimpleOtpInput type="password" :length="4" />
     </section>
+
     <section class="story">
       <label>With inital value</label>
       <SimpleOtpInput value="123456" />
     </section>
+
     <section class="story">
       <label>With events</label>
       <SimpleOtpInput
@@ -63,11 +66,13 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
       <div><strong>Draft</strong> {{ otp }}</div>
       <div><strong>Submitted</strong> {{ submittedOtp }}</div>
     </section>
+
     <section class="story">
       <label>Lazy v-model </label>
       <button @click="setLazyCodeValue">Randomize code value</button>
       <SimpleOtpInput v-model="lazyCode" />
     </section>
+
     <section class="story">
       <label>With extra slot to create border effect</label>
       <SimpleOtpInput

@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-/tests/coverage
+/tests/coverage/lcov-report
+/tests/coverage/lcov.info
 
 
 # local env files

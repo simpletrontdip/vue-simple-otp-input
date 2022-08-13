@@ -5,8 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "test": "vue-cli-service test:unit",
+    "test:cv": "vue-cli-service test:unit --collect-coverage",
     "build:lib": "vue-cli-service build --target lib ./src/libs.js",
     "build:page": "vue-cli-service build --dest demo",
+    "build:badges": "node scripts/update-badges.js",
     "release": "standard-version -a",
     "lint": "vue-cli-service lint"
   },
@@ -69,7 +71,7 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "yarn lint && yarn test && yarn build:lib && yarn build:page && git add demo"
+      "prerelease": "yarn lint && yarn test:cv && yarn build:lib && yarn build:page && yarn build:badges && git add demo && git add tests/coverage"
     }
   },
   "browserslist": [
