@@ -13,6 +13,7 @@ Simple but effective Otp input (for Vue2 only)
 - Handle delete, arrow keys correctly
 - Support both controlled/uncontrolled in components
 - Fully tested with real life usecases
+- Zero dependencies, super small bundle size ~2.3kB gziped
 
 # Why?
 

@@ -31,8 +31,7 @@
     "otp auto complete",
     "otp mobile friendly"
   ],
-  "dependencies": {
-    "core-js": "^3.6.5",
+  "peerDependencies": {
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -48,9 +47,11 @@
     "@vue/vue2-jest": "^28.0.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^28.1.3",
+    "core-js": "^3.6.5",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "standard-version": "^9.3.2",
+    "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
