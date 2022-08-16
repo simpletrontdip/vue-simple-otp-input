@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.1.0...v1.2.0) (2022-08-16)
+
+
+### Features
+
+* **bundle:** move vue to peerDependencies to avoid unnecessary installing, update docs ([108ad8a](https://github.com/simpletrontdip/vue-simple-otp-input/commit/108ad8a5bfb0a1ee7b6ee9926f55afdabeb93db8))
+
 ## [1.1.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.0.0...v1.1.0) (2022-08-13)
 
 
