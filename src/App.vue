@@ -37,7 +37,7 @@
         inputClasses="input-with-effect"
         :pasteDelayMs="192"
       >
-        <template v-slot:extra>
+        <template #extra>
           <span class="focus-border">
             <i></i>
           </span>

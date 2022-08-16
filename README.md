@@ -13,18 +13,22 @@ Simple but effective Otp input (for Vue2 only)
 - Handle delete, arrow keys correctly
 - Support both controlled/uncontrolled in components
 - Fully tested with real life usecases
-- Zero dependencies, super small bundle size ~2.3kB gziped
+- Zero dependencies, super small bundle size **~2.3kB gziped**
 
 # Why?
 
-This is simple to do, but also hard to make it work correctly and handle all the case for otp.
+This sounds simple to do, but hard to make it works correctly and handles all the cases for otp.
 Based on my expericences with the existing libs, I created this to handle all my needs. Hope it helps you as well.
 
 Video for autofill in mobile page (from friends)
 
-[![Safari Autocomplete]](https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4 "Safari")
+| Safari                                                                                                                           | Chrome                                                                                                                           |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| <video src="https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4" alt="Safari"> | <video src="https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4" alt="Chrome"> |
 
-[![Chrome Autocomplete]](https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4 "Chrome")
+Screen shot for tests and test coverage:
+
+<img width="537" alt="Screen Shot 2022-08-16 at 10 48 25" src="https://user-images.githubusercontent.com/20158564/184794127-68ac676c-7430-4394-a356-e28d21e608f8.png">
 
 # Install
 
