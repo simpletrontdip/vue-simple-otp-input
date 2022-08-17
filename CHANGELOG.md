@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.2.0...v1.3.0) (2022-08-17)
+
+
+### Features
+
+* handle up/down key without changing focus, support input type=number ([10ad892](https://github.com/simpletrontdip/vue-simple-otp-input/commit/10ad89210bdaf143a3fac27c701b5bb4e9a2f774))
+
 ## [1.2.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.1.0...v1.2.0) (2022-08-16)
 
 
