@@ -1,5 +1,7 @@
 const BACKSPACE = "Backspace";
 const LEFT_ARROW = "ArrowLeft";
+const UP_ARROW = "ArrowUp";
+const DOWN_ARROW = "ArrowDown";
 const SHIFT = "Shift";
 const CTRL = "Ctrl";
 const ALT = "Alt";
@@ -132,14 +134,17 @@ export default {
     childKeyUp(event, idx) {
       let { keyCode, key } = event;
 
-      // Ignore system modifiers keys
       if (
+        // Ignore system modifiers keys
         key === SHIFT ||
         key === TAB ||
         key === ALT ||
         key === CTRL ||
         keyCode === CMD_CODE ||
-        keyCode === 224
+        keyCode === 224 ||
+        // ignore default keys for number input
+        key === UP_ARROW ||
+        key === DOWN_ARROW
       ) {
         return;
       }
@@ -210,6 +215,14 @@ export default {
     const { type, length, inputClasses } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp } = this.$data;
+    const inputAttrs =
+      type === "number"
+        ? {
+            inputmode: "numeric",
+            min: "0",
+            max: "9",
+          }
+        : {};
 
     return (
       <div class="simple-otp-input">
@@ -221,7 +234,7 @@ export default {
               value={number}
               autocomplete={idx === 0 ? "one-time-code" : "off"}
               type={type}
-              inputmode={type === "number" ? "numeric" : undefined}
+              {...{ attrs: inputAttrs }}
               class={["otp-single-input", inputClasses]}
               onFocus={(event) => this.childFocus(event, idx)}
               onKeyup={(event) => this.childKeyUp(event, idx)}

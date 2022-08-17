@@ -5,13 +5,15 @@
       <label>Default otp input</label>
       <SimpleOtpInput />
     </section>
+
     <section class="story">
       <label>Password type input</label>
       <SimpleOtpInput type="password" :length="4" />
     </section>
+
     <section class="story">
       <label>With inital value</label>
-      <SimpleOtpInput value="123456" />
+      <SimpleOtpInput type="number" value="123456" />
     </section>
 
     <section class="story">
@@ -25,11 +27,13 @@
       <div><strong>Draft</strong> {{ otp }}</div>
       <div><strong>Submitted</strong> {{ submittedOtp }}</div>
     </section>
+
     <section class="story">
       <label>Lazy v-model </label>
       <button @click="setLazyCodeValue">Randomize code value</button>
       <SimpleOtpInput v-model="lazyCode" />
     </section>
+
     <section class="story">
       <label>With extra slot to create border effect</label>
       <SimpleOtpInput
@@ -88,6 +92,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  all: unset;
 }
 
 .story {

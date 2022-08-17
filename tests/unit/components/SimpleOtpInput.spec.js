@@ -390,6 +390,37 @@ describe("SimpleOtpInput", () => {
       await user.tab({ shift: true });
       expect(document.activeElement).toBe(inputs[1]);
     });
+
+    it("should not change focus on up/down arrow keys", async () => {
+      const user = userEvent.setup();
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value: "15",
+          length: 2,
+          type: "number",
+        },
+      });
+      const inputs = document.querySelectorAll("input");
+
+      // focus on first input
+      await user.click(inputs[0]);
+
+      // 1 -{arrowup}{arrowup}-> 1 (value = 3)
+      await user.keyboard("{arrowup}{arrowup}");
+      expect(document.activeElement).toBe(inputs[0]);
+      // XXX some dom won't handle this, so we won't test
+      // expect(document.activeElement.value).toBe("3");
+
+      // 1 -{tab}-> 2
+      await user.keyboard("{tab}");
+      expect(document.activeElement).toBe(inputs[1]);
+
+      // 2 -{arrowdown}{arrowdown}-> 2
+      await user.keyboard("{arrowdown}{arrowup}{arrowdown}{arrowdown}");
+      expect(document.activeElement).toBe(inputs[1]);
+      // XXX some dom won't handle this, so we won't test
+      // expect(document.activeElement.value).toBe("3");
+    });
   });
 
   describe("pasting", () => {
