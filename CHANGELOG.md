@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.3.0...v1.4.0) (2022-08-19)
+
+
+### Features
+
+* improve events, only back if type backspace twice ([4447c75](https://github.com/simpletrontdip/vue-simple-otp-input/commit/4447c755ddd0a664035a0d3d596fb64f308f1e88))
+
 ## [1.3.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.2.0...v1.3.0) (2022-08-17)
 
 
