@@ -22,9 +22,9 @@ Based on my expericences with the existing libs, I created this to handle all my
 
 Video for autofill in mobile page (from friends)
 
-| Safari                                                                                                                           | Chrome                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| <video src="https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4" alt="Safari"> | <video src="https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4" alt="Chrome"> |
+| Safari                                                                                                                                                   | Chrome                                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <video src="https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4" alt="Safari" style="max-width:300px"> | <video src="https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4" alt="Chrome" style="max-width:300px"> |
 
 Screen shot for tests and test coverage:
 
