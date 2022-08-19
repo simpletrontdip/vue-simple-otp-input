@@ -330,7 +330,12 @@ describe("SimpleOtpInput", () => {
       expect(value.trim()).toBe("1AB4");
       expect(document.activeElement).toEqual(inputs[3]);
 
-      // 4 -{backspace}-> 3
+      // 4 -{backspace}-> 4
+      await user.keyboard("{backspace}");
+      expect(value.trim()).toBe("1AB");
+      expect(document.activeElement).toEqual(inputs[3]);
+
+      // 4 -{backspace}-> 3 (double backspaces)
       await user.keyboard("{backspace}");
       expect(value.trim()).toBe("1AB");
       expect(document.activeElement).toEqual(inputs[2]);

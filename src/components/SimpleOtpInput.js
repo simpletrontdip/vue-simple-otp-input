@@ -50,6 +50,15 @@ export default {
     otpValue() {
       return this.otp.map((item) => item || " ").join("");
     },
+    inputAttrs() {
+      return this.type === "number"
+        ? {
+            inputmode: "numeric",
+            min: "0",
+            max: "9",
+          }
+        : {};
+    },
   },
   watch: {
     value(val) {
@@ -165,9 +174,9 @@ export default {
         // This handles virtual keyboard better
         !count &&
         idx > 0 &&
-        (!this.otp[idx + 1] || this.lastKey === key)
+        this.lastKey === key
       ) {
-        // Backspace, only go to prev field if the next field is empty or they type it twice
+        // Backspace, only go to prev field if they type it twice
         this.focusInput(idx - 1);
       } else if (
         key !== BACKSPACE &&
@@ -215,14 +224,6 @@ export default {
     const { type, length, inputClasses } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp } = this.$data;
-    const inputAttrs =
-      type === "number"
-        ? {
-            inputmode: "numeric",
-            min: "0",
-            max: "9",
-          }
-        : {};
 
     return (
       <div class="simple-otp-input">
@@ -234,7 +235,7 @@ export default {
               value={number}
               autocomplete={idx === 0 ? "one-time-code" : "off"}
               type={type}
-              {...{ attrs: inputAttrs }}
+              {...{ attrs: this.inputAttrs }}
               class={["otp-single-input", inputClasses]}
               onFocus={(event) => this.childFocus(event, idx)}
               onKeyup={(event) => this.childKeyUp(event, idx)}
