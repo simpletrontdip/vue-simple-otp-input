@@ -477,6 +477,165 @@ describe("SimpleOtpInput", () => {
     });
   });
 
+  describe("webOtp", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    const makeMockNavigatorCreds = ({ code, error, timeout }) => ({
+      get({ otp, signal }) {
+        expect(otp).toEqual({ transport: ["sms"] });
+        expect(signal).toBeDefined();
+
+        if (error) {
+          return Promise.reject(error);
+        }
+
+        return new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                type: "otp",
+                code,
+              }),
+            timeout || 0
+          )
+        );
+      },
+    });
+
+    const setupFakeWebOtp = (params) => {
+      const originalNavigatorCreds = window.navigator.credentials;
+
+      window.OTPCredential = true;
+      window.navigator.credentials = makeMockNavigatorCreds(params);
+
+      return () => {
+        delete window.OTPCredential;
+        window.navigator.credentials = originalNavigatorCreds;
+      };
+    };
+
+    it("do nothing when WebOtp is not supported", () => {
+      const isSupported = "OTPCredential" in window;
+      expect(isSupported).toBeFalsy();
+
+      wrapper = render({
+        mounted() {
+          // no AbortController is created
+          expect(this.$refs.otpInstance.ac).toBeFalsy();
+        },
+        template: `<div>
+          <SimpleOtpInput ref="otpInstance" />
+        </div>`,
+        components: {
+          SimpleOtpInput,
+        },
+      });
+    });
+
+    it("setup sms otp correctly otherwise", async () => {
+      const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
+      const cleanup = setupFakeWebOtp({ code: "333333" });
+
+      let value = null;
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          withWebOtp: true,
+        },
+        listeners: {
+          complete: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      // value is empty at first
+      expect(value).toBeFalsy();
+
+      await waitFor(() => {
+        // the mock sms otp returned
+        expect(value).toBe("333333");
+        expect(spiedAbort).toHaveBeenCalledTimes(0);
+      });
+
+      cleanup();
+    });
+
+    it("handle user rejection error nicely", async () => {
+      const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
+      const cleanup = setupFakeWebOtp({ error: "Action cancelled by user" });
+      const user = userEvent.setup();
+
+      let value = null;
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          withWebOtp: true,
+        },
+        listeners: {
+          complete: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      // value is empty at first
+      expect(value).toBeFalsy();
+
+      await waitFor(() => {
+        // the mock sms otp rejected
+        expect(value).toBeFalsy();
+        expect(spiedAbort).toHaveBeenCalledTimes(0);
+      });
+
+      // enter something after error
+      await user.click(document.querySelector("input"));
+      await user.paste("111111");
+
+      await waitFor(() => {
+        // input should work as usual
+        expect(value).toBe("111111");
+      });
+
+      cleanup();
+    });
+
+    it("listener can be canceled when user complete it manually", async () => {
+      const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
+      const cleanup = setupFakeWebOtp({ code: "333333", timeout: 2000 });
+
+      const user = userEvent.setup();
+
+      let value = null;
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          withWebOtp: true,
+        },
+        listeners: {
+          complete: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      // value is empty at first
+      expect(value).toBeFalsy();
+      await user.click(document.querySelector("input"));
+      await user.paste("111111");
+
+      await waitFor(() => {
+        // the mock sms otp is aborted before returning
+        expect(value).toBe("111111");
+        expect(spiedAbort).toHaveBeenCalledTimes(1);
+      });
+
+      cleanup();
+    });
+  });
+
   describe("instance api (not recommended, use v-model instead)", () => {
     let wrapper;
 

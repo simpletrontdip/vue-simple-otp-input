@@ -10,10 +10,9 @@ const ENTER = "Enter";
 
 const CMD_CODE = 91;
 
-const fillArrToLength = (str, len, val = "") => {
-  const remain = Math.max(len - str.length, 0);
-  return Array.from(str).concat(new Array(remain).fill(val)).slice(0, len);
-};
+const fillArrToLength = (str, len, val = "") =>
+  // fill all then slice later
+  Array.from(str).concat(new Array(len).fill(val)).slice(0, len);
 
 export default {
   name: "SimpleOtpInput",
@@ -39,11 +38,16 @@ export default {
       type: Number,
       default: 0,
     },
+    withWebOtp: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       otp: fillArrToLength(this.value, this.length),
       lastKey: null,
+      ac: null,
     };
   },
   computed: {
@@ -60,6 +64,11 @@ export default {
         : {};
     },
   },
+  mounted() {
+    if (!this.value) {
+      this.setupSmsOtp();
+    }
+  },
   watch: {
     value(val) {
       if (val !== this.otpValue) {
@@ -68,6 +77,28 @@ export default {
     },
   },
   methods: {
+    setupSmsOtp() {
+      // listen for Chrome SMS Otp API
+      if (!this.withWebOtp || !("OTPCredential" in window)) {
+        return;
+      }
+
+      this.ac = new AbortController();
+      navigator.credentials
+        .get({
+          otp: { transport: ["sms"] },
+          signal: this.ac.signal,
+        })
+        .then((otp) => {
+          this.setOtpValue(otp.code);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.ac = null;
+        });
+    },
     emitChange() {
       // this give user a better change recognition
       this.$emit("change", this.otpValue);
@@ -76,6 +107,10 @@ export default {
     },
     emitComplete() {
       this.$emit("complete", this.otpValue);
+
+      if (this.ac) {
+        this.ac.abort();
+      }
     },
     emitEvents(idx) {
       this.emitChange();
