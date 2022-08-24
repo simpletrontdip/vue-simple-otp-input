@@ -40,6 +40,7 @@
         class="otp-with-effect"
         inputClasses="input-with-effect"
         :pasteDelayMs="192"
+        withWebOtp
       >
         <template #extra>
           <span class="focus-border">

@@ -14,6 +14,7 @@ Simple but effective Otp input (for Vue2 only)
 - Support both controlled/uncontrolled in components
 - Fully tested with real life usecases
 - Zero dependencies, super small bundle size **~2.3kB gziped**
+- [WebOtp](https://developer.mozilla.org/en-US/docs/Web/API/WebOTP_API) included
 
 # Why?
 
@@ -22,9 +23,9 @@ Based on my expericences with the existing libs, I created this to handle all my
 
 Video for autofill in mobile page (from friends)
 
-| Safari                                                                                                                                                   | Chrome                                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <video src="https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4" alt="Safari" style="max-width:300px"> | <video src="https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4" alt="Chrome" style="max-width:300px"> |
+| Safari                                                                                                                                                            | Chrome                                                                                                                                                            |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <video controls src="https://user-images.githubusercontent.com/20158564/156875581-425dc90a-b534-4b4b-9ba9-7e72a044d2cf.MP4" alt="Safari" style="max-width:300px"> | <video controls src="https://user-images.githubusercontent.com/20158564/159843487-a484a8d7-b130-47a2-8107-90c39211f082.MP4" alt="Chrome" style="max-width:300px"> |
 
 Screen shot for tests and test coverage:
 
@@ -84,6 +85,7 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
         class="otp-with-effect"
         inputClasses="input-with-effect"
         :pasteDelayMs="192"
+        withWebOtp
       >
         <template v-slot:extra>
           <span class="focus-border">
@@ -103,6 +105,7 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 | type         | `'text'` | Html input type of each input, you may find `'password'` useful                                                             |
 | inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                               |
 | pasteDelayMs | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                                       |
+| withWebOtp   | `false`  | Should we enable **WebOtp** setup when browser is supported                                                                 |
 
 # Events
 
