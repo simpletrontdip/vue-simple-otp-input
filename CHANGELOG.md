@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.4.0...v1.5.0) (2022-08-25)
+
+
+### Features
+
+* setup WebOtp when applicable, handle auto completion in Android devices ([998e86f](https://github.com/simpletrontdip/vue-simple-otp-input/commit/998e86f2f73aeee342d93dc0b052b832f94cc460))
+
 ## [1.4.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.3.0...v1.4.0) (2022-08-19)
 
 
