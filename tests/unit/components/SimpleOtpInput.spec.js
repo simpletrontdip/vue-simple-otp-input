@@ -128,7 +128,9 @@ describe("SimpleOtpInput", () => {
 
       const input = document.querySelector("input");
 
-      await user.type(input, "123");
+      await user.click(input);
+      await user.keyboard("123");
+
       await waitFor(() => {
         expect(handleChange).toHaveBeenCalledTimes(3);
       });
@@ -157,6 +159,18 @@ describe("SimpleOtpInput", () => {
 
       await user.type(input, "{enter}");
       await waitFor(() => {
+        expect(handleComplete).toHaveBeenCalledTimes(2);
+      });
+
+      // focus on last input
+      await user.click(
+        document.querySelector("[data-testid=otp-single-input-5]")
+      );
+
+      // change on last input
+      await user.keyboard("{backspace}");
+      await waitFor(() => {
+        // but complete should not trigger
         expect(handleComplete).toHaveBeenCalledTimes(2);
       });
     });
@@ -212,10 +226,16 @@ describe("SimpleOtpInput", () => {
 
     it("should auto focus on first empty input", async () => {
       const user = userEvent.setup();
+      let value = "123";
       wrapper = render(SimpleOtpInput, {
         props: {
           value: "123",
           length: 6,
+        },
+        listeners: {
+          change(val) {
+            value = val;
+          },
         },
       });
 
@@ -234,13 +254,45 @@ describe("SimpleOtpInput", () => {
       await user.click(inputs[5]);
       expect(document.activeElement).toEqual(inputs[3]);
 
-      // value now empty
-      await wrapper.updateProps({
-        value: "",
+      // 4 (empty) -> (backspace)x2 -> 3 --> (backspace)x3 -> 1 empty
+      await user.keyboard(
+        "{backspace}{backspace}{backspace}{backspace}{backspace}"
+      );
+
+      await waitFor(() => {
+        expect(value.trim()).toBe("");
       });
 
       await user.click(inputs[5]);
       expect(document.activeElement).toEqual(inputs[0]);
+
+      // enter something
+      await user.keyboard("1234");
+      await waitFor(() => {
+        expect(value.trim()).toBe("1234");
+      });
+
+      await user.click(inputs[2]);
+      // 3 -> (backspace)x2 -> 2 -> (backspace)x2 -> 1 empty
+      await user.keyboard("{backspace}{backspace}{backspace}{backspace}");
+
+      await waitFor(() => {
+        expect(value).toBe("   4  ");
+      });
+
+      // can focus on any input before input 5 even if they are empty
+      await user.click(inputs[2]);
+      expect(document.activeElement).toEqual(inputs[2]);
+
+      await user.click(inputs[1]);
+      expect(document.activeElement).toEqual(inputs[1]);
+
+      await user.click(inputs[4]);
+      expect(document.activeElement).toEqual(inputs[4]);
+
+      // this still not focusable
+      await user.click(inputs[5]);
+      expect(document.activeElement).toEqual(inputs[4]);
     });
 
     it("should auto focus next input while typing", async () => {
@@ -372,6 +424,37 @@ describe("SimpleOtpInput", () => {
       await user.keyboard("{backspace}");
       expect(value.trim()).toBe("A  D");
       expect(document.activeElement).toEqual(inputs[0]);
+    });
+
+    it("should tolorate `delete/backspace` keys with false selectd range", async () => {
+      const user = userEvent.setup();
+      let value = "123";
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value: "123",
+          length: 6,
+        },
+        listeners: {
+          change(val) {
+            value = val;
+          },
+        },
+      });
+
+      const inputs = document.querySelectorAll("input");
+      expect(inputs.length).toBe(6);
+
+      await user.click(inputs[1]);
+      // intentionally unselect the default range, put cursor at the start, now backspace won't work by default
+      inputs[1].setSelectionRange(0, 0);
+
+      await user.keyboard("{backspace}");
+      await waitFor(() => {
+        expect(value).toBe("1 3   ");
+      });
+
+      await user.keyboard("{backspace}");
+      expect(document.activeElement).toBe(inputs[0]);
     });
 
     it("should not interfere system default binding", async () => {

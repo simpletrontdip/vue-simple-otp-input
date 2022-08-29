@@ -1,5 +1,7 @@
 const BACKSPACE = "Backspace";
+const DELETE = "Delete";
 const LEFT_ARROW = "ArrowLeft";
+const RIGHT_ARROW = "ArrowRight";
 const UP_ARROW = "ArrowUp";
 const DOWN_ARROW = "ArrowDown";
 const SHIFT = "Shift";
@@ -31,7 +33,7 @@ export default {
       default: "text",
     },
     inputClasses: {
-      type: String,
+      type: [String, Array, Object],
       default: undefined,
     },
     pasteDelayMs: {
@@ -53,6 +55,14 @@ export default {
   computed: {
     otpValue() {
       return this.otp.map((item) => item || " ").join("");
+    },
+    lastFocusable() {
+      for (let idx = this.length; idx > 0; idx--) {
+        if (this.otp[idx - 1]) {
+          return idx;
+        }
+      }
+      return 0;
     },
     inputAttrs() {
       return this.type === "number"
@@ -112,11 +122,11 @@ export default {
         this.ac.abort();
       }
     },
-    emitEvents(idx) {
+    emitEvents(idx, deleting) {
       this.emitChange();
 
-      if (idx === this.length - 1) {
-        // emit events on last index
+      if (!deleting && idx === this.length - 1) {
+        // emit events on last index if not deleting
         this.emitComplete();
       }
     },
@@ -164,15 +174,11 @@ export default {
       }
     },
     childFocus(_e, idx) {
-      // If value of input 1 is empty, focus it.
-      if (idx === 0 || this.$refs.inputs[0].value === "") {
-        this.focusInput(0);
-        return;
-      }
-
-      // If value of a previous input is empty, focus it.
-      if (this.$refs.inputs[idx - 1].value === "") {
-        this.focusInput(idx - 1);
+      if (idx > this.lastFocusable) {
+        this.focusInput(this.lastFocusable);
+      } else {
+        // select input content
+        this.$refs.inputs[idx].select();
       }
     },
     childKeyUp(event, idx) {
@@ -201,20 +207,25 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
-      if (key === LEFT_ARROW && idx > 0) {
+      if (key === BACKSPACE || key === DELETE) {
+        // deleting keys
+        if (count === 0 && this.lastKey === key && idx > 0) {
+          this.focusInput(idx - 1);
+        } else if (count > 0) {
+          // press delete key, but not on the correct idx, we try to fix this
+          this.$set(this.otp, idx, "");
+          // Emit change for this
+          this.emitChange(idx);
+        }
+      } else if (key === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
         this.focusInput(idx - 1);
-      } else if (
-        // XXX count == 0 => we are deleting input content
-        // This handles virtual keyboard better
-        !count &&
-        idx > 0 &&
-        this.lastKey === key
-      ) {
-        // Backspace, only go to prev field if they type it twice
-        this.focusInput(idx - 1);
+      } else if (key === RIGHT_ARROW && idx < this.length - 1) {
+        // Right arrow, go to the next field.
+        this.focusInput(idx + 1);
       } else if (
         key !== BACKSPACE &&
+        key !== DELETE &&
         key !== LEFT_ARROW &&
         count === 1 &&
         idx < this.length - 1
@@ -250,7 +261,7 @@ export default {
         // update single value
         this.$set(this.otp, idx, value);
         // Emit change for this
-        this.emitEvents(idx);
+        this.emitEvents(idx, !count);
       }
     },
   },
