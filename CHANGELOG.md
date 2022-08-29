@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.0...v1.5.1) (2022-08-29)
+
+
+### Features
+
+* tolorate user error for not deleting out-range, refine focusable logic ([15cae8d](https://github.com/simpletrontdip/vue-simple-otp-input/commit/15cae8d8b88c59a42204a829e4504faa5fca0abc))
+
 ## [1.5.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.4.0...v1.5.0) (2022-08-25)
 
 
