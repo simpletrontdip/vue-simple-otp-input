@@ -11,6 +11,8 @@ const TAB = "Tab";
 const ENTER = "Enter";
 
 const CMD_CODE = 91;
+const OS_CODE = 224;
+const UNDEFINED_CODE = 229;
 
 const fillArrToLength = (str, len, val = "") =>
   // fill all then slice later
@@ -182,7 +184,7 @@ export default {
       }
     },
     childKeyUp(event, idx) {
-      let { keyCode, key } = event;
+      const { keyCode, key } = event;
 
       if (
         // Ignore system modifiers keys
@@ -191,7 +193,8 @@ export default {
         key === ALT ||
         key === CTRL ||
         keyCode === CMD_CODE ||
-        keyCode === 224 ||
+        keyCode === OS_CODE ||
+        keyCode === UNDEFINED_CODE ||
         // ignore default keys for number input
         key === UP_ARROW ||
         key === DOWN_ARROW
@@ -207,17 +210,7 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
-      if (key === BACKSPACE || key === DELETE) {
-        // deleting keys
-        if (count === 0 && this.lastKey === key && idx > 0) {
-          this.focusInput(idx - 1);
-        } else if (count > 0) {
-          // press delete key, but not on the correct idx, we try to fix this
-          this.$set(this.otp, idx, "");
-          // Emit change for this
-          this.emitChange(idx);
-        }
-      } else if (key === LEFT_ARROW && idx > 0) {
+      if (key === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
         this.focusInput(idx - 1);
       } else if (key === RIGHT_ARROW && idx < this.length - 1) {
@@ -233,13 +226,29 @@ export default {
         this.focusInput(idx + 1);
       }
 
-      if (count > 1) {
-        // set multiple value with effects
-        // The single char should be handled by Input
-        this.setOtpValue(value, idx);
+      this.lastKey = key;
+    },
+    childBeforeInput(event, idx) {
+      // XXX This happens before the change on `@input`, so the value hasn't been updated
+      // fallback for keyUp on Android Chrome, hopefully can handle backspaces better
+      const { inputType } = event;
+
+      if (inputType === "deleteContentBackward") {
+        // We will do the deletion here, regardless the selection range
+        this.$set(this.otp, idx, "");
+        // Emit the change
+        this.emitChange(idx);
+
+        if (inputType === this.lastInputType && idx > 0) {
+          // back to previous field if repeated
+          setTimeout(() => {
+            // make sure we did not double delete, because of next `@input`
+            this.focusInput(idx - 1);
+          });
+        }
       }
 
-      this.lastKey = key;
+      this.lastInputType = inputType;
     },
     childPaste(event, idx) {
       event.preventDefault();
@@ -253,7 +262,7 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
-      // If the target is populated to quickly, count can be > 1
+      // If the target is populated too quickly, count can be > 1
       if (count > 1) {
         // set multiple value with effects
         this.setOtpValue(value, idx);
@@ -287,6 +296,7 @@ export default {
               onKeyup={(event) => this.childKeyUp(event, idx)}
               onPaste={(event) => this.childPaste(event, idx)}
               onInput={(event) => this.childInput(event, idx)}
+              onBeforeinput={(event) => this.childBeforeInput(event, idx)}
               data-testid={`otp-single-input-${idx}`}
             />
             {extra && extra({ otp, idx, length })}
