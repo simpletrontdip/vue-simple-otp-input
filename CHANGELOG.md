@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.1...v1.5.2) (2022-08-30)
+
+
+### Features
+
+* **events:** utilize beforeinput event to handle backspace event better in android ([e626162](https://github.com/simpletrontdip/vue-simple-otp-input/commit/e62616248868b26b4199f9bc260b9a521b176d48))
+
 ### [1.5.1](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.0...v1.5.1) (2022-08-29)
 
 
