@@ -14,6 +14,10 @@ const CMD_CODE = 91;
 const OS_CODE = 224;
 const UNDEFINED_CODE = 229;
 
+const isAndroidChrome = () =>
+  /chrome/i.test(window.navigator.userAgent) &&
+  /android/i.test(window.navigator.userAgent);
+
 const fillArrToLength = (str, len, val = "") =>
   // fill all then slice later
   Array.from(str).concat(new Array(len).fill(val)).slice(0, len);
@@ -55,6 +59,9 @@ export default {
     };
   },
   computed: {
+    isAndroidChrome() {
+      return isAndroidChrome();
+    },
     otpValue() {
       return this.otp.map((item) => item || " ").join("");
     },
@@ -210,6 +217,20 @@ export default {
       const value = event.target.value;
       const count = value.length;
 
+      if (!this.isAndroidChrome && (key === BACKSPACE || key === DELETE)) {
+        // for browser other than Android Chrome, we receive backspaces event
+        if (count) {
+          this.$set(this.otp, idx, "");
+          // Emit the change
+          this.emitChange(idx);
+        }
+
+        if (key === this.lastKey && idx > 0) {
+          // back to previous field if repeated
+          this.focusInput(idx - 1);
+        }
+      }
+
       if (key === LEFT_ARROW && idx > 0) {
         // Left arrow, go to the previous field.
         this.focusInput(idx - 1);
@@ -231,20 +252,26 @@ export default {
     childBeforeInput(event, idx) {
       // XXX This happens before the change on `@input`, so the value hasn't been updated
       // fallback for keyUp on Android Chrome, hopefully can handle backspaces better
+      if (!this.isAndroidChrome) {
+        return;
+      }
+
       const { inputType } = event;
 
       if (inputType === "deleteContentBackward") {
         // We will do the deletion here, regardless the selection range
         this.$set(this.otp, idx, "");
+        event.target.value = "";
         // Emit the change
         this.emitChange(idx);
 
-        if (inputType === this.lastInputType && idx > 0) {
-          // back to previous field if repeated
+        if (idx > 0) {
+          // XXX we should only go back to previous field if repeated
+          // But Chrome won't give us, because input didn't change
           setTimeout(() => {
             // make sure we did not double delete, because of next `@input`
             this.focusInput(idx - 1);
-          });
+          }, 0);
         }
       }
 

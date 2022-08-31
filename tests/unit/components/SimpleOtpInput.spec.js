@@ -342,7 +342,6 @@ describe("SimpleOtpInput", () => {
       const user = userEvent.setup();
 
       let value = "1234";
-
       wrapper = render(SimpleOtpInput, {
         props: {
           value,
@@ -511,6 +510,53 @@ describe("SimpleOtpInput", () => {
     });
   });
 
+  describe("for Android Chrome", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    it("should detect backward deletion and move focus backward", async () => {
+      const mockUserAgent = jest.spyOn(navigator, "userAgent", "get");
+      const user = userEvent.setup();
+      mockUserAgent.mockReturnValue("Android Chrome");
+
+      let value = "1234";
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value,
+          length: 4,
+        },
+        listeners: {
+          change: (val) => {
+            value = val;
+          },
+        },
+      });
+      const inputs = document.querySelectorAll("input");
+
+      // focus first input
+      await user.click(inputs[2]);
+      expect(document.activeElement).toEqual(inputs[2]);
+
+      await user.keyboard("{backspace}");
+      expect(document.activeElement).toEqual(inputs[1]);
+      expect(value).toBe("12 4");
+
+      await user.keyboard("A");
+      expect(document.activeElement).toEqual(inputs[2]);
+      expect(value).toBe("1A 4");
+
+      await user.keyboard("{backspace}{backspace}{backspace}")
+      expect(document.activeElement).toEqual(inputs[0]);
+      expect(value).toBe("   4");
+
+      mockUserAgent.mockClear();
+    });
+  });
+
   describe("pasting", () => {
     let wrapper;
 
@@ -622,7 +668,7 @@ describe("SimpleOtpInput", () => {
 
     it("setup sms otp correctly otherwise", async () => {
       const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
-      const cleanup = setupFakeWebOtp({ code: "333333" });
+      const cleanupFn = setupFakeWebOtp({ code: "333333" });
 
       let value = null;
       wrapper = render(SimpleOtpInput, {
@@ -645,12 +691,12 @@ describe("SimpleOtpInput", () => {
         expect(spiedAbort).toHaveBeenCalledTimes(0);
       });
 
-      cleanup();
+      cleanupFn();
     });
 
     it("handle user rejection error nicely", async () => {
       const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
-      const cleanup = setupFakeWebOtp({ error: "Action cancelled by user" });
+      const cleanupFn = setupFakeWebOtp({ error: "Action cancelled by user" });
       const user = userEvent.setup();
 
       let value = null;
@@ -683,12 +729,12 @@ describe("SimpleOtpInput", () => {
         expect(value).toBe("111111");
       });
 
-      cleanup();
+      cleanupFn();
     });
 
     it("listener can be canceled when user complete it manually", async () => {
       const spiedAbort = jest.spyOn(AbortController.prototype, "abort");
-      const cleanup = setupFakeWebOtp({ code: "333333", timeout: 2000 });
+      const cleanupFn = setupFakeWebOtp({ code: "333333", timeout: 2000 });
 
       const user = userEvent.setup();
 
@@ -715,7 +761,7 @@ describe("SimpleOtpInput", () => {
         expect(spiedAbort).toHaveBeenCalledTimes(1);
       });
 
-      cleanup();
+      cleanupFn();
     });
   });
 
