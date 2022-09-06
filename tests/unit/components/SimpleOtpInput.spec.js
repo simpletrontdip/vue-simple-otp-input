@@ -34,7 +34,7 @@ describe("SimpleOtpInput", () => {
       expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it("should forward `inputClasses`, `type` to inner inputs", () => {
+    it("should render `inputClasses`, `type` correctly to inner inputs", () => {
       wrapper = render(SimpleOtpInput, {
         props: {
           inputClasses: "some-class or-more-class",
@@ -518,6 +518,28 @@ describe("SimpleOtpInput", () => {
       cleanup();
     });
 
+    it('should have correct inputmode and type for "number"', () => {
+      const mockUserAgent = jest.spyOn(navigator, "userAgent", "get");
+      mockUserAgent.mockReturnValue("Android Chrome");
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          inputClasses: "some-class or-more-class",
+          type: "number",
+        },
+      });
+
+      const inputs = document.querySelectorAll("input");
+      expect(inputs.length).toBe(6);
+
+      inputs.forEach((el) => {
+        expect(el.classList).toContain("some-class");
+        expect(el.classList).toContain("or-more-class");
+      });
+
+      expect(wrapper.html()).toMatchSnapshot();
+      mockUserAgent.mockClear();
+    });
+
     it("should detect backward deletion and move focus backward", async () => {
       const mockUserAgent = jest.spyOn(navigator, "userAgent", "get");
       const user = userEvent.setup();
@@ -545,11 +567,13 @@ describe("SimpleOtpInput", () => {
       expect(document.activeElement).toEqual(inputs[1]);
       expect(value).toBe("12 4");
 
+      // await user.keyboard("{backspace}");
+
       await user.keyboard("A");
       expect(document.activeElement).toEqual(inputs[2]);
       expect(value).toBe("1A 4");
 
-      await user.keyboard("{backspace}{backspace}{backspace}")
+      await user.keyboard("{backspace}{backspace}{backspace}");
       expect(document.activeElement).toEqual(inputs[0]);
       expect(value).toBe("   4");
 

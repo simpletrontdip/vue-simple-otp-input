@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SimpleOtpInput contents should forward \`inputClasses\`, \`type\` to inner inputs 1`] = `
+exports[`SimpleOtpInput contents should render \`inputClasses\`, \`type\` correctly to inner inputs 1`] = `
 <div class="simple-otp-input">
-  <div class="single-input-container"><input autocomplete="one-time-code" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-0" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-1" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-2" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-3" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-4" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" min="0" max="9" data-testid="otp-single-input-5" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="one-time-code" type="number" inputmode="numeric" data-testid="otp-single-input-0" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-1" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-2" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-3" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-4" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-5" class="otp-single-input some-class or-more-class"></div>
 </div>
 `;
 
@@ -38,5 +38,16 @@ exports[`SimpleOtpInput contents should render slot \`extra\` correctly 1`] = `
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-11" class="otp-single-input"><span class="extra-slot"><i>p</i></span></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-12" class="otp-single-input"><span class="extra-slot"><i>u</i></span></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-13" class="otp-single-input"><span class="extra-slot"><i>t</i></span></div>
+</div>
+`;
+
+exports[`SimpleOtpInput for Android Chrome should have correct inputmode and type for "number" 1`] = `
+<div class="simple-otp-input">
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-0" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-1" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-2" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-3" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-4" class="otp-single-input some-class or-more-class"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="tel" pattern="[ 0-9]*" data-testid="otp-single-input-5" class="otp-single-input some-class or-more-class"></div>
 </div>
 `;

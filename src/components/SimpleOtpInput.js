@@ -67,20 +67,24 @@ export default {
     },
     lastFocusable() {
       for (let idx = this.length; idx > 0; idx--) {
-        if (this.otp[idx - 1]) {
+        // empty cell is now a space, so check it carefully
+        const value = this.otp[idx - 1];
+        if (value && value.trim()) {
           return idx;
         }
       }
       return 0;
     },
     inputAttrs() {
-      return this.type === "number"
-        ? {
-            inputmode: "numeric",
-            min: "0",
-            max: "9",
-          }
-        : {};
+      if (this.type !== "number") {
+        return { type: this.type };
+      }
+
+      if (this.isAndroidChrome) {
+        return { type: "text", inputmode: "tel", pattern: "[ 0-9]*" };
+      }
+
+      return { type: "number", inputmode: "numeric" };
     },
   },
   mounted() {
@@ -142,7 +146,7 @@ export default {
     focusInput(idx) {
       // some browsers do `focus` on `select`, but we call both for certainity
       this.$refs.inputs[idx].focus();
-      this.$refs.inputs[idx].select();
+      // this.$refs.inputs[idx].select();
     },
     getOtpValue() {
       return this.otpValue;
@@ -214,13 +218,14 @@ export default {
         this.emitComplete();
       }
 
-      const value = event.target.value;
+      const value = event.target.value.trim();
       const count = value.length;
 
       if (!this.isAndroidChrome && (key === BACKSPACE || key === DELETE)) {
         // for browser other than Android Chrome, we receive backspaces event
+        // keyup is after `input`, so we couldn't know prev value
         if (count) {
-          this.$set(this.otp, idx, "");
+          this.$set(this.otp, idx, " ");
           // Emit the change
           this.emitChange(idx);
         }
@@ -259,11 +264,12 @@ export default {
       const { inputType } = event;
 
       if (inputType === "deleteContentBackward") {
-        // We will do the deletion here, regardless the selection range
-        this.$set(this.otp, idx, "");
-        event.target.value = "";
+        // We will do the deletion here, by inserting a space,
+        // to avoid empty content, which makes Chrome failed to fire next events,
+        // prevent the default behaviour
+        this.$set(this.otp, idx, " ");
         // Emit the change
-        this.emitChange(idx);
+        this.emitChange(idx, true);
 
         if (idx > 0) {
           // XXX we should only go back to previous field if repeated
@@ -274,7 +280,6 @@ export default {
           }, 0);
         }
       }
-
       this.lastInputType = inputType;
     },
     childPaste(event, idx) {
@@ -285,8 +290,7 @@ export default {
       this.setOtpValue(value, idx);
     },
     childInput(event, idx) {
-      // handle paste on Chrome
-      const value = event.target.value;
+      const value = event.target.value.trim();
       const count = value.length;
 
       // If the target is populated too quickly, count can be > 1
@@ -295,7 +299,7 @@ export default {
         this.setOtpValue(value, idx);
       } else {
         // update single value
-        this.$set(this.otp, idx, value);
+        this.$set(this.otp, idx, value || " ");
         // Emit change for this
         this.emitEvents(idx, !count);
       }
@@ -303,7 +307,7 @@ export default {
   },
 
   render() {
-    const { type, length, inputClasses } = this.$props;
+    const { length, inputClasses } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp } = this.$data;
 
@@ -316,7 +320,6 @@ export default {
               refInFor
               value={number}
               autocomplete={idx === 0 ? "one-time-code" : "off"}
-              type={type}
               {...{ attrs: this.inputAttrs }}
               class={["otp-single-input", inputClasses]}
               onFocus={(event) => this.childFocus(event, idx)}
