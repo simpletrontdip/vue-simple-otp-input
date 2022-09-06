@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.3...v1.6.0) (2022-09-06)
+
+
+### Features
+
+* replace empty cell by a space, allow android devices to fire event correctly ([c7d89e5](https://github.com/simpletrontdip/vue-simple-otp-input/commit/c7d89e5c4becc99bead51476fc6dbbd2bdfbead2))
+
 ### [1.5.3](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.2...v1.5.3) (2022-08-31)
 
 ### [1.5.2](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.1...v1.5.2) (2022-08-30)
