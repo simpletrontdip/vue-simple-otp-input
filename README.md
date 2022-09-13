@@ -29,7 +29,10 @@ Video for autofill in mobile page (from friends)
 
 Screen shot for tests and test coverage:
 
-<img width="537" alt="Screen Shot 2022-08-16 at 10 48 25" src="https://user-images.githubusercontent.com/20158564/184794127-68ac676c-7430-4394-a356-e28d21e608f8.png">
+<img width="664" alt="Screen Shot 2022-09-13 at 10 47 54" src="https://user-images.githubusercontent.com/20158564/189803473-677f9b3b-d71b-4b7a-8f9b-c455a557824a.png">
+
+
+
 
 # Install
 
