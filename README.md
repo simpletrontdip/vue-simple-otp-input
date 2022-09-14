@@ -31,9 +31,6 @@ Screen shot for tests and test coverage:
 
 <img width="664" alt="Screen Shot 2022-09-13 at 10 47 54" src="https://user-images.githubusercontent.com/20158564/189803473-677f9b3b-d71b-4b7a-8f9b-c455a557824a.png">
 
-
-
-
 # Install
 
 ```
@@ -109,6 +106,7 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 | inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                               |
 | pasteDelayMs | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                                       |
 | withWebOtp   | `false`  | Should we enable **WebOtp** setup when browser is supported                                                                 |
+| inputProps   | `{}`     | Custom input props will be set to all input, totally control edge cases                                                     |
 
 # Events
 

@@ -42,6 +42,10 @@ export default {
       type: [String, Array, Object],
       default: undefined,
     },
+    inputProps: {
+      type: Object,
+      default: undefined,
+    },
     pasteDelayMs: {
       type: Number,
       default: 0,
@@ -75,7 +79,7 @@ export default {
       }
       return 0;
     },
-    inputAttrs() {
+    typeAttrs() {
       if (this.type !== "number") {
         return { type: this.type };
       }
@@ -85,6 +89,12 @@ export default {
       }
 
       return { type: "number", inputmode: "numeric" };
+    },
+    inputAttrs() {
+      return {
+        ...this.typeAttrs,
+        ...this.inputProps,
+      };
     },
   },
   mounted() {

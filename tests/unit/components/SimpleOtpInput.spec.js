@@ -53,6 +53,29 @@ describe("SimpleOtpInput", () => {
       expect(wrapper.html()).toMatchSnapshot();
     });
 
+    it("should render `inputProps`, correctly to inner inputs", () => {
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          type: "number",
+          inputProps: {
+            pattern: "[0-9]*",
+            type: "text",
+          },
+        },
+      });
+
+      const inputs = document.querySelectorAll("input");
+      expect(inputs.length).toBe(6);
+
+      inputs.forEach((el) => {
+        // `inputProps` override default `type`, to allow fully customized
+        expect(el.getAttribute("type")).toBe("text");
+        expect(el.getAttribute("pattern")).toBe("[0-9]*");
+      });
+
+      expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it("should render correctly with `length` and `value`", () => {
       [4, 5, 6, 7].forEach((length) => {
         const value = randomText(length);

@@ -11,6 +11,17 @@ exports[`SimpleOtpInput contents should render \`inputClasses\`, \`type\` correc
 </div>
 `;
 
+exports[`SimpleOtpInput contents should render \`inputProps\`, correctly to inner inputs 1`] = `
+<div class="simple-otp-input">
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-0" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-1" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-2" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-3" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-4" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-5" class="otp-single-input"></div>
+</div>
+`;
+
 exports[`SimpleOtpInput contents should render correct default 1`] = `
 <div class="simple-otp-input">
   <div class="single-input-container"><input autocomplete="one-time-code" type="text" data-testid="otp-single-input-0" class="otp-single-input"></div>
