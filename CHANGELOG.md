@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.6.0...v1.7.0) (2022-09-14)
+
+
+### Features
+
+* add `inputProps` to custom input deeper ([109d3c0](https://github.com/simpletrontdip/vue-simple-otp-input/commit/109d3c0363597de0f5edc703844ba8ca22b959c5))
+
 ## [1.6.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.5.3...v1.6.0) (2022-09-06)
 
 
