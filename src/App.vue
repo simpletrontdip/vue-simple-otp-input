@@ -118,13 +118,18 @@ input[type="number"]::-webkit-inner-spin-button {
   overflow: hidden;
 }
 
+.otp-with-effect .otp-single-input.active {
+  outline: none;
+}
+
 .input-with-effect {
   outline: none;
   border-width: 1px;
   border-radius: 3px;
 }
 
-.input-with-effect:focus {
+.input-with-effect:focus,
+.input-with-effect.active {
   border-color: transparent;
 }
 
@@ -166,21 +171,26 @@ input[type="number"]::-webkit-inner-spin-button {
   transition-delay: 0.2s;
 }
 .input-with-effect:focus ~ .focus-border:before,
-.input-with-effect:focus ~ .focus-border:after {
+.input-with-effect.active ~ .focus-border:before,
+.input-with-effect:focus ~ .focus-border:after,
+.input-with-effect.active ~ .focus-border:after {
   width: 100%;
   transition: 0.1s;
   transition-delay: 0.3s;
 }
-.input-with-effect:focus ~ .focus-border:after {
+.input-with-effect:focus ~ .focus-border:after,
+.input-with-effect.active ~ .focus-border:after {
   transition-delay: 0.1s;
 }
 .input-with-effect:focus ~ .focus-border i:before,
-.input-with-effect:focus ~ .focus-border i:after {
+.input-with-effect.active ~ .focus-border i:before,
+.input-with-effect:focus ~ .focus-border i:after,
+.input-with-effect.active ~ .focus-border i:after {
   height: 100%;
   transition: 0.1s;
 }
-.input-with-effect:focus ~ .focus-border i:after {
+.input-with-effect:focus .focus-border i:after,
+.input-with-effect.active ~ .focus-border i:after {
   transition-delay: 0.2s;
 }
-
 </style>

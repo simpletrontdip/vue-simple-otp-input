@@ -169,8 +169,11 @@ export default {
       this.$refs.inputs[idx].focus();
       // this.$refs.inputs[idx].select();
     },
-    toggleFakeFocus() {
-      this.shouldFakeFocus = true
+    setFakeFocus() {
+      this.shouldFakeFocus = true;
+    },
+    unsetFakeFocus() {
+      this.shouldFakeFocus = false;
     },
     getOtpValue() {
       return this.otpValue;
@@ -355,7 +358,7 @@ export default {
     const { length, inputClasses } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp, shouldFakeFocus } = this.$data;
-    const { isEmpty, isAndroidChrome , lastFocusable } = this;
+    const { isEmpty, isAndroidChrome, lastFocusable } = this;
 
     return (
       <div class={["simple-otp-input", { empty: isEmpty }]}>
@@ -387,7 +390,8 @@ export default {
             ref="hiddenInput"
             class="hidden-otp-input"
             autocomplete="one-time-code"
-            onFocus={this.toggleFakeFocus}
+            onFocus={this.setFakeFocus}
+            onBlur={this.unsetFakeFocus}
             onKeyup={(event) => this.childKeyUp(event, 0)}
             onPaste={(event) => this.childPaste(event, 0)}
             onInput={(event) => this.childInput(event, 0)}
