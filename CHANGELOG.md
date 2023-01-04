@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.7.0...v1.8.0) (2023-01-04)
+
+
+### Features
+
+* cannonically handle empty value, improve UX ([2c2d982](https://github.com/simpletrontdip/vue-simple-otp-input/commit/2c2d9826cefc6803f9d08de7d8a7159991c137a4))
+
 ## [1.7.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.6.0...v1.7.0) (2022-09-14)
 
 
