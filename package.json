@@ -1,6 +1,6 @@
 {
   "name": "vue-simple-otp-input",
-  "version": "1.9.0-alpha.0",
+  "version": "1.9.0-alpha.1",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
