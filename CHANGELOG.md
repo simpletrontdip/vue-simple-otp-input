@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-alpha.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.8.0...v1.9.0-alpha.0) (2023-01-04)
+
+
+### Features
+
+* add hidden input to capture auto-suggestion event in ios devices ([ada654c](https://github.com/simpletrontdip/vue-simple-otp-input/commit/ada654c3d04b35cf9c57adf412221e2da6a14413))
+
 ## [1.8.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.7.0...v1.8.0) (2023-01-04)
 
 
