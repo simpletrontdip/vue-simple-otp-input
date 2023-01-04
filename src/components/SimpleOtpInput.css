@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .otp-single-input {
@@ -13,5 +14,24 @@
 
 .single-input-container {
   position: relative;
+  z-index: 1;
   margin: 2px;
+}
+
+.simple-otp-input .hidden-otp-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.simple-otp-input.empty .single-input-container {
+  z-index: 0;
+}
+
+.simple-otp-input.empty .hidden-otp-input {
+  z-index: 1;
+  pointer-events: initial;
 }

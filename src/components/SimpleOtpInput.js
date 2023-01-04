@@ -23,7 +23,7 @@ const buildOtpCodeArr = (strVal, len, emptyVal = "") =>
   Array.from(strVal)
     .concat(new Array(len).fill(emptyVal))
     .slice(0, len)
-    // strVal accepts space, but otpCode don't
+    // strVal accepts space, but otpCode doesn't
     .map((n) => (n === " " ? emptyVal : n));
 
 export default {
@@ -64,6 +64,7 @@ export default {
       otp: buildOtpCodeArr(this.value, this.length, this.emptyValue),
       lastKey: null,
       ac: null,
+      shouldFakeFocus: false,
     };
   },
   computed: {
@@ -75,6 +76,9 @@ export default {
     },
     otpValue() {
       return this.otp.map((item) => item || " ").join("");
+    },
+    isEmpty() {
+      return !this.otpValue.trim();
     },
     lastFocusable() {
       for (let idx = this.length; idx > 0; idx--) {
@@ -165,6 +169,9 @@ export default {
       this.$refs.inputs[idx].focus();
       // this.$refs.inputs[idx].select();
     },
+    toggleFakeFocus() {
+      this.shouldFakeFocus = true
+    },
     getOtpValue() {
       return this.otpValue;
     },
@@ -175,6 +182,11 @@ export default {
     setOtpValue(data, startIdx = 0) {
       if (!data) {
         return;
+      }
+
+      if (!this.isAndroidChrome) {
+        // reset hiddenInput
+        this.$refs.hiddenInput.value = "";
       }
 
       // Focus on startIdx
@@ -203,7 +215,13 @@ export default {
         }
       }
     },
-    childFocus(_e, idx) {
+    childFocus(event, idx) {
+      if (!this.isAndroidChrome && event.target !== this.$refs.hiddenInput) {
+        // reset hidden input
+        this.$refs.hiddenInput.value = "";
+        this.shouldFakeFocus = false;
+      }
+
       if (idx > this.lastFocusable) {
         this.focusInput(this.lastFocusable);
       } else {
@@ -320,6 +338,15 @@ export default {
         this.$set(this.otp, idx, value || this.emptyValue);
         // Emit change for this
         this.emitEvents(idx, !count);
+
+        if (!this.isAndroidChrome && idx === 0 && this.isEmpty) {
+          setTimeout(() => {
+            // force user to re-focus on hidden input to get auto suggestion
+            if (this.isEmpty) {
+              this.$refs.inputs[0].blur();
+            }
+          }, 1500);
+        }
       }
     },
   },
@@ -327,10 +354,11 @@ export default {
   render() {
     const { length, inputClasses } = this.$props;
     const { extra } = this.$scopedSlots;
-    const { otp } = this.$data;
+    const { otp, shouldFakeFocus } = this.$data;
+    const { isEmpty, isAndroidChrome , lastFocusable } = this;
 
     return (
-      <div class="simple-otp-input">
+      <div class={["simple-otp-input", { empty: isEmpty }]}>
         {otp.map((number, idx) => (
           <div key={idx} class="single-input-container">
             <input
@@ -339,7 +367,11 @@ export default {
               value={number}
               autocomplete={idx === 0 ? "one-time-code" : "off"}
               {...{ attrs: this.inputAttrs }}
-              class={["otp-single-input", inputClasses]}
+              class={[
+                "otp-single-input",
+                { active: shouldFakeFocus && idx === lastFocusable },
+                inputClasses,
+              ]}
               onFocus={(event) => this.childFocus(event, idx)}
               onKeyup={(event) => this.childKeyUp(event, idx)}
               onPaste={(event) => this.childPaste(event, idx)}
@@ -350,6 +382,18 @@ export default {
             {extra && extra({ otp, idx, length })}
           </div>
         ))}
+        {!isAndroidChrome && (
+          <input
+            ref="hiddenInput"
+            class="hidden-otp-input"
+            autocomplete="one-time-code"
+            onFocus={this.toggleFakeFocus}
+            onKeyup={(event) => this.childKeyUp(event, 0)}
+            onPaste={(event) => this.childPaste(event, 0)}
+            onInput={(event) => this.childInput(event, 0)}
+            {...{ attrs: this.inputAttrs }}
+          />
+        )}
       </div>
     );
   },

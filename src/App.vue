@@ -99,6 +99,15 @@ input[type="number"]::-webkit-inner-spin-button {
   all: unset;
 }
 
+.simple-otp-input {
+  width: fit-content;
+  margin: auto;
+}
+
+.otp-single-input.active {
+  outline: 2px auto -webkit-focus-ring-color;
+}
+
 .story {
   padding: 8px;
   margin-top: 24px;
@@ -173,4 +182,5 @@ input[type="number"]::-webkit-inner-spin-button {
 .input-with-effect:focus ~ .focus-border i:after {
   transition-delay: 0.2s;
 }
+
 </style>

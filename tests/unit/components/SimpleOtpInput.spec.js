@@ -1,10 +1,4 @@
-import {
-  render,
-  screen,
-  cleanup,
-  fireEvent,
-  waitFor,
-} from "@testing-library/vue";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
 import { mount } from "@vue/test-utils";
 
@@ -28,7 +22,7 @@ describe("SimpleOtpInput", () => {
     it("should render correct default", () => {
       wrapper = render(SimpleOtpInput);
 
-      const inputs = screen.queryAllByRole("textbox");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       expect(wrapper.html()).toMatchSnapshot();
@@ -42,7 +36,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       inputs.forEach((el) => {
@@ -64,7 +58,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       inputs.forEach((el) => {
@@ -87,7 +81,7 @@ describe("SimpleOtpInput", () => {
           },
         });
 
-        const inputs = screen.queryAllByRole("textbox");
+        const inputs = document.querySelectorAll("input.otp-single-input");
         expect(inputs.length).toBe(length);
 
         inputs.forEach((el, idx) => {
@@ -265,7 +259,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       // it's OK to focus first input
@@ -342,7 +336,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // click on first input
       await user.click(inputs[0]);
@@ -379,7 +373,7 @@ describe("SimpleOtpInput", () => {
           },
         },
       });
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // focus first input
       await user.click(inputs[0]);
@@ -466,7 +460,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       await user.click(inputs[1]);
@@ -490,7 +484,7 @@ describe("SimpleOtpInput", () => {
           length: 4,
         },
       });
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // focus on first input
       await user.click(inputs[0]);
@@ -513,7 +507,7 @@ describe("SimpleOtpInput", () => {
           type: "number",
         },
       });
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // focus on first input
       await user.click(inputs[0]);
@@ -554,7 +548,7 @@ describe("SimpleOtpInput", () => {
         },
       });
 
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
       expect(inputs.length).toBe(6);
 
       inputs.forEach((el) => {
@@ -583,7 +577,7 @@ describe("SimpleOtpInput", () => {
           },
         },
       });
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // focus first input
       await user.click(inputs[2]);
@@ -630,7 +624,7 @@ describe("SimpleOtpInput", () => {
           },
         },
       });
-      const inputs = document.querySelectorAll("input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
 
       // focus first input
       await user.click(inputs[0]);
