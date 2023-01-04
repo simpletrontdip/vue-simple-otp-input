@@ -202,7 +202,7 @@ describe("SimpleOtpInput", () => {
       const user = userEvent.setup();
       wrapper = render({
         data() {
-          return { otp: "" };
+          return { otp: "a c " };
         },
         template: `<div>
           <SimpleOtpInput v-model="otp" />
@@ -222,6 +222,9 @@ describe("SimpleOtpInput", () => {
       const input = document.querySelector("input");
       const output = document.querySelector("[data-testid='output']");
       const button = document.querySelector("[data-testid='button']");
+
+      // string value should accept spaces
+      expect(output.innerHTML.trim()).toBe("a c");
 
       // update from input
       // XXX `userEvent.type` will send key by key of an input,

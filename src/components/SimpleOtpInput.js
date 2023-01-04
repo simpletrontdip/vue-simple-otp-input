@@ -18,9 +18,13 @@ const isAndroidChrome = () =>
   /chrome/i.test(window.navigator.userAgent) &&
   /android/i.test(window.navigator.userAgent);
 
-const fillArrToLength = (str, len, val = "") =>
+const buildOtpCodeArr = (strVal, len, emptyVal = "") =>
   // fill all then slice later
-  Array.from(str).concat(new Array(len).fill(val)).slice(0, len);
+  Array.from(strVal)
+    .concat(new Array(len).fill(emptyVal))
+    .slice(0, len)
+    // strVal accepts space, but otpCode don't
+    .map((n) => (n === " " ? emptyVal : n));
 
 export default {
   name: "SimpleOtpInput",
@@ -57,7 +61,7 @@ export default {
   },
   data() {
     return {
-      otp: fillArrToLength(this.value, this.length),
+      otp: buildOtpCodeArr(this.value, this.length, this.emptyValue),
       lastKey: null,
       ac: null,
     };
@@ -66,12 +70,15 @@ export default {
     isAndroidChrome() {
       return isAndroidChrome();
     },
+    emptyValue() {
+      return this.isAndroidChrome ? " " : "";
+    },
     otpValue() {
       return this.otp.map((item) => item || " ").join("");
     },
     lastFocusable() {
       for (let idx = this.length; idx > 0; idx--) {
-        // empty cell is now a space, so check it carefully
+        // empty cell may be a 'space' now, so check it carefully
         const value = this.otp[idx - 1];
         if (value && value.trim()) {
           return idx;
@@ -105,7 +112,7 @@ export default {
   watch: {
     value(val) {
       if (val !== this.otpValue) {
-        this.otp = fillArrToLength(val, this.length);
+        this.otp = buildOtpCodeArr(val, this.length, this.emptyValue);
       }
     },
   },
@@ -235,7 +242,7 @@ export default {
         // for browser other than Android Chrome, we receive backspaces event
         // keyup is after `input`, so we couldn't know prev value
         if (count) {
-          this.$set(this.otp, idx, " ");
+          this.$set(this.otp, idx, this.emptyValue);
           // Emit the change
           this.emitChange(idx);
         }
@@ -276,8 +283,9 @@ export default {
       if (inputType === "deleteContentBackward") {
         // We will do the deletion here, by inserting a space,
         // to avoid empty content, which makes Chrome failed to fire next events,
-        // prevent the default behaviour
-        this.$set(this.otp, idx, " ");
+        // prevent the default behaviour, except the first input
+        const emptyValue = idx === 0 ? "" : this.emptyValue;
+        this.$set(this.otp, idx, emptyValue);
         // Emit the change
         this.emitChange(idx, true);
 
@@ -309,7 +317,7 @@ export default {
         this.setOtpValue(value, idx);
       } else {
         // update single value
-        this.$set(this.otp, idx, value || " ");
+        this.$set(this.otp, idx, value || this.emptyValue);
         // Emit change for this
         this.emitEvents(idx, !count);
       }
