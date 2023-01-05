@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-alpha.2](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.9.0-alpha.1...v1.9.0-alpha.2) (2023-01-05)
+
+
+### Features
+
+* add with-extra-span flag, simplify the extra content setup ([d7730fb](https://github.com/simpletrontdip/vue-simple-otp-input/commit/d7730fb1172067c6db5b3cc78129f44159459992))
+
 ## [1.9.0-alpha.1](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.9.0-alpha.0...v1.9.0-alpha.1) (2023-01-04)
 
 ## [1.9.0-alpha.0](https://github.com/simpletrontdip/vue-simple-otp-input/compare/v1.8.0...v1.9.0-alpha.0) (2023-01-04)
