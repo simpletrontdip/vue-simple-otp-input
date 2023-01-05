@@ -111,10 +111,10 @@ input[type="number"]::-webkit-inner-spin-button {
 @keyframes blink {
   from,
   to {
-    opacity: 0;
+    opacity: 1;
   }
   50% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 

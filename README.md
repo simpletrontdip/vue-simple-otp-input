@@ -98,15 +98,16 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 
 # Props
 
-| Prop         | Default  | Description                                                                                                                 |
-| ------------ | -------- | --------------------------------------------------------------------------------------------------------------------------- |
-| length       | `6`      | Length of this otp input                                                                                                    |
-| value        | `''`     | Value for this input, v-model is supported, in rare cases, you may need to use `setOtpValue` to force update internal state |
-| type         | `'text'` | Html input type of each input, you may find `'password'` useful                                                             |
-| inputClasses | `''`     | Inner input classess, allow you to fully control input styles                                                               |
-| pasteDelayMs | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                                       |
-| withWebOtp   | `false`  | Should we enable **WebOtp** setup when browser is supported                                                                 |
-| inputProps   | `{}`     | Custom input props will be set to all input, totally control edge cases                                                     |
+| Prop          | Default  | Description                                                                                                                 |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| length        | `6`      | Length of this otp input                                                                                                    |
+| value         | `''`     | Value for this input, v-model is supported, in rare cases, you may need to use `setOtpValue` to force update internal state |
+| type          | `'text'` | Html input type of each input, you may find `'password'` useful                                                             |
+| inputClasses  | `''`     | Inner input classess, allow you to fully control input styles                                                               |
+| pasteDelayMs  | `0`      | Delay for pasting content, we may want to let the animation to take effect on pasting                                       |
+| withWebOtp    | `false`  | Should we enable **WebOtp** setup when browser is supported                                                                 |
+| withExtraSpan | `false`  | Just like `extra` slot, but enabled via a flag and no customization                                                         |
+| inputProps    | `{}`     | Custom input props will be set to all input, totally control edge cases                                                     |
 
 # Events
 
@@ -131,6 +132,7 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .otp-single-input {
@@ -142,7 +144,26 @@ Look at the App.vue for more detail, or try it [here](https://simpletrontdip.git
 
 .single-input-container {
   position: relative;
+  z-index: 1;
   margin: 2px;
+}
+
+.simple-otp-input .hidden-otp-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.simple-otp-input.empty .single-input-container {
+  z-index: 0;
+}
+
+.simple-otp-input.empty .hidden-otp-input {
+  z-index: 1;
+  pointer-events: initial;
 }
 ```
 
