@@ -58,6 +58,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    withExtraSpan: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -222,7 +226,6 @@ export default {
       if (!this.isAndroidChrome && event.target !== this.$refs.hiddenInput) {
         // reset hidden input
         this.$refs.hiddenInput.value = "";
-        this.shouldFakeFocus = false;
       }
 
       if (idx > this.lastFocusable) {
@@ -355,7 +358,7 @@ export default {
   },
 
   render() {
-    const { length, inputClasses } = this.$props;
+    const { length, inputClasses, withExtraSpan } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp, shouldFakeFocus } = this.$data;
     const { isEmpty, isAndroidChrome, lastFocusable } = this;
@@ -382,7 +385,9 @@ export default {
               onBeforeinput={(event) => this.childBeforeInput(event, idx)}
               data-testid={`otp-single-input-${idx}`}
             />
-            {extra && extra({ otp, idx, length })}
+            {extra
+              ? extra({ otp, idx, length })
+              : withExtraSpan && <span class="extra-span" />}
           </div>
         ))}
         {!isAndroidChrome && (

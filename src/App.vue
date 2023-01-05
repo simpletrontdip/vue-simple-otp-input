@@ -3,7 +3,7 @@
     <h4>Vue SimpleOtpInput</h4>
     <section class="story">
       <label>Default otp input</label>
-      <SimpleOtpInput />
+      <SimpleOtpInput withExtraSpan />
     </section>
 
     <section class="story">
@@ -13,7 +13,7 @@
 
     <section class="story">
       <label>With inital value</label>
-      <SimpleOtpInput type="number" value="123456" />
+      <SimpleOtpInput type="number" value="123456" withExtraSpan />
     </section>
 
     <section class="story">
@@ -106,6 +106,30 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .otp-single-input.active {
   outline: 2px auto -webkit-focus-ring-color;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.otp-single-input.active ~ .extra-span::after {
+  content: "|";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  animation: 1s blink step-end infinite;
+  color: inherit;
 }
 
 .story {
