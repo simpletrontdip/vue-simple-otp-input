@@ -69,6 +69,7 @@ export default {
       lastKey: null,
       ac: null,
       shouldFakeFocus: false,
+      timeoutIds: [],
     };
   },
   computed: {
@@ -117,6 +118,12 @@ export default {
       this.setupSmsOtp();
     }
   },
+  destroyed() {
+    this.timeoutIds.forEach((timeoutId) => {
+      // clear all queued tasks
+      clearTimeout(timeoutId);
+    });
+  },
   watch: {
     value(val) {
       if (val !== this.otpValue) {
@@ -146,6 +153,12 @@ export default {
         .finally(() => {
           this.ac = null;
         });
+    },
+    enqueueTask(fn, delayMs) {
+      const timeoutId = setTimeout(fn, delayMs);
+
+      // track the id
+      this.timeoutIds.push(timeoutId);
     },
     emitChange() {
       // this give user a better change recognition
@@ -215,7 +228,7 @@ export default {
         this.focusInput(idx + 1);
 
         if (data.length) {
-          setTimeout(() => {
+          this.enqueueTask(() => {
             // Update next input with the data
             this.populateNext(data, idx + 1);
           }, this.pasteDelayMs);
@@ -316,7 +329,7 @@ export default {
         if (idx > 0) {
           // XXX we should only go back to previous field if repeated
           // But Chrome won't give us, because input didn't change
-          setTimeout(() => {
+          this.enqueueTask(() => {
             // make sure we did not double delete, because of next `@input`
             this.focusInput(idx - 1);
           }, 0);
@@ -346,7 +359,7 @@ export default {
         this.emitEvents(idx, !count);
 
         if (!this.isAndroidChrome && idx === 0 && this.isEmpty) {
-          setTimeout(() => {
+          this.enqueueTask(() => {
             // force user to re-focus on hidden input to get auto suggestion
             if (this.isEmpty) {
               this.$refs.inputs[0].blur();
