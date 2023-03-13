@@ -7,7 +7,7 @@ exports[`SimpleOtpInput contents should render \`inputClasses\`, \`type\` correc
   <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-2" class="otp-single-input some-class or-more-class"></div>
   <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-3" class="otp-single-input some-class or-more-class"></div>
   <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-4" class="otp-single-input some-class or-more-class"></div>
-  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-5" class="otp-single-input some-class or-more-class"></div><input autocomplete="one-time-code" type="number" inputmode="numeric" class="hidden-otp-input">
+  <div class="single-input-container"><input autocomplete="off" type="number" inputmode="numeric" data-testid="otp-single-input-5" class="otp-single-input some-class or-more-class"></div>
 </div>
 `;
 
@@ -18,7 +18,7 @@ exports[`SimpleOtpInput contents should render \`inputProps\`, correctly to inne
   <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-2" class="otp-single-input"></div>
   <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-3" class="otp-single-input"></div>
   <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-4" class="otp-single-input"></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-5" class="otp-single-input"></div><input autocomplete="one-time-code" type="text" inputmode="numeric" pattern="[0-9]*" class="hidden-otp-input">
+  <div class="single-input-container"><input autocomplete="off" type="text" inputmode="numeric" pattern="[0-9]*" data-testid="otp-single-input-5" class="otp-single-input"></div>
 </div>
 `;
 
@@ -29,7 +29,7 @@ exports[`SimpleOtpInput contents should render correct default 1`] = `
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-2" class="otp-single-input"></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-3" class="otp-single-input"></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-4" class="otp-single-input"></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-5" class="otp-single-input"></div><input autocomplete="one-time-code" type="text" class="hidden-otp-input">
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-5" class="otp-single-input"></div>
 </div>
 `;
 
@@ -48,7 +48,18 @@ exports[`SimpleOtpInput contents should render slot \`extra\` correctly 1`] = `
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-10" class="otp-single-input"><span class="extra-slot"><i>n</i></span></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-11" class="otp-single-input"><span class="extra-slot"><i>p</i></span></div>
   <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-12" class="otp-single-input"><span class="extra-slot"><i>u</i></span></div>
-  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-13" class="otp-single-input"><span class="extra-slot"><i>t</i></span></div><input autocomplete="one-time-code" type="text" class="hidden-otp-input">
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-13" class="otp-single-input"><span class="extra-slot"><i>t</i></span></div>
+</div>
+`;
+
+exports[`SimpleOtpInput focus grabber should render hidden input correctly 1`] = `
+<div class="simple-otp-input">
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" data-testid="otp-single-input-0" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-1" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-2" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-3" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-4" class="otp-single-input"></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-5" class="otp-single-input"></div><input autocomplete="one-time-code" type="text" class="hidden-otp-input">
 </div>
 `;
 

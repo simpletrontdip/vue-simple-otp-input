@@ -18,6 +18,8 @@ const isAndroidChrome = () =>
   /chrome/i.test(window.navigator.userAgent) &&
   /android/i.test(window.navigator.userAgent);
 
+const isIosDevice = () => /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+
 const buildOtpCodeArr = (strVal, len, emptyVal = "") =>
   // fill all then slice later
   Array.from(strVal)
@@ -62,6 +64,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    withFocusGrabber: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -75,6 +81,9 @@ export default {
   computed: {
     isAndroidChrome() {
       return isAndroidChrome();
+    },
+    shouldEnableFocusGrabber() {
+      return this.withFocusGrabber || isIosDevice();
     },
     emptyValue() {
       return this.isAndroidChrome ? " " : "";
@@ -204,7 +213,7 @@ export default {
         return;
       }
 
-      if (!this.isAndroidChrome) {
+      if (this.shouldEnableFocusGrabber) {
         // reset hiddenInput
         this.$refs.hiddenInput.value = "";
       }
@@ -236,7 +245,10 @@ export default {
       }
     },
     childFocus(event, idx) {
-      if (!this.isAndroidChrome && event.target !== this.$refs.hiddenInput) {
+      if (
+        this.shouldEnableFocusGrabber &&
+        event.target !== this.$refs.hiddenInput
+      ) {
         // reset hidden input
         this.$refs.hiddenInput.value = "";
       }
@@ -358,7 +370,7 @@ export default {
         // Emit change for this
         this.emitEvents(idx, !count);
 
-        if (!this.isAndroidChrome && idx === 0 && this.isEmpty) {
+        if (this.shouldEnableFocusGrabber && idx === 0 && this.isEmpty) {
           this.enqueueTask(() => {
             // force user to re-focus on hidden input to get auto suggestion
             if (this.isEmpty) {
@@ -374,7 +386,7 @@ export default {
     const { length, inputClasses, withExtraSpan } = this.$props;
     const { extra } = this.$scopedSlots;
     const { otp, shouldFakeFocus } = this.$data;
-    const { isEmpty, isAndroidChrome, lastFocusable } = this;
+    const { isEmpty, shouldEnableFocusGrabber, lastFocusable } = this;
 
     return (
       <div class={["simple-otp-input", { empty: isEmpty }]}>
@@ -403,7 +415,7 @@ export default {
               : withExtraSpan && <span class="extra-span" />}
           </div>
         ))}
-        {!isAndroidChrome && (
+        {shouldEnableFocusGrabber && (
           <input
             ref="hiddenInput"
             class="hidden-otp-input"

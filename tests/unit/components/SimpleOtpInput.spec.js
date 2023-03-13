@@ -809,6 +809,158 @@ describe("SimpleOtpInput", () => {
     });
   });
 
+  describe("focus grabber", () => {
+    let wrapper;
+
+    afterEach(() => {
+      wrapper && wrapper.unmount();
+      cleanup();
+    });
+
+    it("should render hidden input correctly", async () => {
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value: "1234",
+          withFocusGrabber: true,
+        },
+      });
+
+      expect(wrapper.html()).toMatchSnapshot();
+      const hiddenInput = document.querySelector("input.hidden-otp-input");
+
+      expect(hiddenInput).toBeDefined();
+    });
+
+    it("should handle input events correctly", async () => {
+      const user = userEvent.setup();
+      let value = "";
+
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value,
+          withFocusGrabber: true,
+        },
+        listeners: {
+          change: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      const hiddenInput = document.querySelector("input.hidden-otp-input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
+
+      await user.click(hiddenInput);
+      // real focus to hidden input
+      expect(document.activeElement).toEqual(hiddenInput);
+      // but active style should be input 0
+      expect(inputs[0].classList).toContain("active");
+
+      await user.keyboard("123");
+      expect(value).toBe("123   ");
+
+      // now active element is moved
+      expect(document.activeElement).toBe(inputs[3]);
+      // input value should be cleared
+      expect(hiddenInput.value).toEqual("");
+
+      await user.paste("45");
+      expect(value).toBe("12345 ");
+    });
+
+    it("should handle paste event correctly", async () => {
+      const user = userEvent.setup();
+      let value = "";
+
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value,
+          withFocusGrabber: true,
+        },
+        listeners: {
+          change: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      const hiddenInput = document.querySelector("input.hidden-otp-input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
+
+      await user.click(hiddenInput);
+      // real focus to hidden input
+      expect(document.activeElement).toEqual(hiddenInput);
+      // but active style should be input 0
+      expect(inputs[0].classList).toContain("active");
+
+      await user.paste("123");
+      await waitFor(() => {
+        expect(value).toBe("123   ");
+      });
+
+      // now active element is moved
+      expect(document.activeElement).toBe(inputs[3]);
+      // input value should be cleared
+      expect(hiddenInput.value).toEqual("");
+
+      await user.paste("45");
+      expect(value).toBe("12345 ");
+    });
+
+    it("should auto blur when input is empty", async () => {
+      const user = userEvent.setup();
+      let value = "";
+
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          value,
+          withFocusGrabber: true,
+        },
+        listeners: {
+          change: (val) => {
+            value = val;
+          },
+        },
+      });
+
+      const hiddenInput = document.querySelector("input.hidden-otp-input");
+      const inputs = document.querySelectorAll("input.otp-single-input");
+
+      await user.click(hiddenInput);
+      // real focus to hidden input
+      expect(document.activeElement).toEqual(hiddenInput);
+      // but active style should be input 0
+      expect(inputs[0].classList).toContain("active");
+
+      await user.keyboard("123");
+      expect(value).toBe("123   ");
+
+      // now active element is moved
+      expect(document.activeElement).toBe(inputs[3]);
+      // input value should be cleared
+      expect(hiddenInput.value).toEqual("");
+
+      await user.keyboard(
+        "{backspace}{backspace}{backspace}{backspace}{backspace}"
+      );
+      await waitFor(() => {
+        expect(value.trim()).toBe("");
+      });
+
+      // firstly, it should be focus to input[0]
+      expect(document.activeElement).toBe(inputs[0]);
+      await waitFor(
+        () => {
+          // it should blur
+          expect(document.activeElement !== inputs[0]).toBeTruthy();
+        },
+        {
+          timeout: 2000,
+        }
+      );
+    });
+  });
+
   describe("instance api (not recommended, use v-model instead)", () => {
     let wrapper;
 
