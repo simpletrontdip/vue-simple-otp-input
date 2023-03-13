@@ -33,6 +33,17 @@ exports[`SimpleOtpInput contents should render correct default 1`] = `
 </div>
 `;
 
+exports[`SimpleOtpInput contents should render correctly \`withExtraSpan\` 1`] = `
+<div class="simple-otp-input">
+  <div class="single-input-container"><input autocomplete="one-time-code" type="text" data-testid="otp-single-input-0" class="otp-single-input"><span class="extra-span"></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-1" class="otp-single-input"><span class="extra-span"></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-2" class="otp-single-input"><span class="extra-span"></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-3" class="otp-single-input"><span class="extra-span"></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-4" class="otp-single-input"><span class="extra-span"></span></div>
+  <div class="single-input-container"><input autocomplete="off" type="text" data-testid="otp-single-input-5" class="otp-single-input"><span class="extra-span"></span></div>
+</div>
+`;
+
 exports[`SimpleOtpInput contents should render slot \`extra\` correctly 1`] = `
 <div class="simple-otp-input">
   <div class="single-input-container"><input autocomplete="one-time-code" type="text" data-testid="otp-single-input-0" class="otp-single-input"><span class="extra-slot"><i>S</i></span></div>

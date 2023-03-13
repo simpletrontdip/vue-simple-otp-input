@@ -93,6 +93,27 @@ describe("SimpleOtpInput", () => {
       });
     });
 
+    it("should render correctly `withExtraSpan`", () => {
+      const length = 6;
+      const value = randomText(length);
+
+      wrapper = render(SimpleOtpInput, {
+        props: {
+          length,
+          value,
+          withExtraSpan: true,
+        },
+      });
+
+      const inputs = document.querySelectorAll("input.otp-single-input");
+      expect(inputs.length).toBe(length);
+
+      inputs.forEach((el, idx) => {
+        expect(el.value).toBe(value.charAt(idx));
+      });
+      expect(wrapper.html()).toMatchSnapshot();
+    });
+
     it("should render slot `extra` correctly", () => {
       const value = "SimpleOtpInput";
 
